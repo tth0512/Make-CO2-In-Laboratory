@@ -2,17 +2,19 @@ using UnityEngine;
 
 public class InteractionManager : MonoBehaviour
 {
-    public static InteractionManager Instance { get; set; }
+    public static InteractionManager Ins { get; set; }
     private GameObject hoveredObject;
+
+    public GameObject GetHoveredObject() => hoveredObject;
     private void Awake()
     {
-        if (Instance != null && Instance != this)
+        if (Ins != null && Ins != this)
         {
             Destroy(this);
         }
         else
         {
-            Instance = this;
+            Ins = this;
         }
     }
 
