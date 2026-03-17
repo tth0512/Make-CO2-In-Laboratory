@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Xml.Schema;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -29,7 +29,25 @@ public class PlayerPickUp : MonoBehaviour
 
     public void OnHoldInteract()
     {
-        RightHand.GetChild(0).GetComponent<Rigidbody>().isKinematic = false;
-        RightHand.GetChild(0).transform.SetParent(null);
+        var curObj = RightHand.GetChild(0);
+        curObj.GetComponent<Rigidbody>().isKinematic = false;
+
+        float keepY = curObj.position.y;
+        Vector3 dropPosition = curObj.position;
+
+        Camera cam = Camera.main;
+        if (cam != null)
+        {
+            Ray centerRay = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+            Plane keepHeightPlane = new Plane(Vector3.up, new Vector3(0f, keepY, 0f));
+
+            if (keepHeightPlane.Raycast(centerRay, out float enter))
+            {
+                dropPosition = centerRay.GetPoint(enter); // đổi X,Z theo tâm cam, giữ Y
+            }
+        }
+
+        curObj.SetParent(null);
+        curObj.position = dropPosition;
     }
 }
