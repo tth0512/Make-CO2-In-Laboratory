@@ -31,18 +31,22 @@ public class InteractionManager : MonoBehaviour
             {
                 if (objectHitByRaycast.CompareTag("Glass"))
                 {
+                    objectHitByRaycast.GetComponent<Outline>().enabled = true;
                     hoveredObject = objectHitByRaycast;
-                    hoveredObject.GetComponent<Outline>().enabled = true;
                 }
                 else
                 {
                     if (hoveredObject)
                     {
                         hoveredObject.GetComponent<Outline>().enabled = false;
+                        hoveredObject = null;
                     }
                 }
             }
-
+        }
+        else
+        {
+            hoveredObject = null;
         }
     }
 }

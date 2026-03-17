@@ -34,7 +34,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Interact",
+                    "name": "TapInteract",
                     "type": "Button",
                     "id": "852140f2-7766-474d-8707-702459ba45f3",
                     "expectedControlType": "",
@@ -43,10 +43,19 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "HoldInteract",
+                    "type": "Button",
+                    "id": "f8c54315-ded5-4171-8e86-50594c93c5fe",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Crouch",
                     "type": "Button",
                     "id": "27c5f898-bc57-4ee1-8800-db469aca5fe3",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -437,7 +446,7 @@
                     "interactions": "Tap",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Interact",
+                    "action": "TapInteract",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -448,18 +457,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Interact",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "fd9809f0-7a1f-48db-ba34-4f8bbb81234a",
-                    "path": "<Keyboard>/e",
-                    "interactions": "Hold",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "Interact",
+                    "action": "TapInteract",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -482,6 +480,17 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Crouch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ff533a25-25ed-409e-85e5-e7d3e34848e2",
+                    "path": "<Keyboard>/e",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "HoldInteract",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

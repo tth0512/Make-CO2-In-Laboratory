@@ -29,7 +29,7 @@ public class LabEquipmentManager : MonoBehaviour
     private void DetectAndSetupObjectsInScene()
     {
         // Lấy toàn bộ Collider trên Scene
-        Collider[] allObjectsInScene = FindObjectsOfType<Collider>();
+        Collider[] allObjectsInScene = FindObjectsByType<Collider>(FindObjectsSortMode.None);
 
         foreach (Collider col in allObjectsInScene)
         {
@@ -91,21 +91,50 @@ public class LabEquipmentManager : MonoBehaviour
 
     private void SetupInitialOutline(GameObject obj)
     {
-        Debug.Log($"Detect {obj.name}");
-        // Tự động gắn script Outline (giả sử bạn đã có script Outline.cs trong project)
+        // 1. Tự động gắn script Outline nhưng TẮT nó đi lúc ban đầu
         Outline outline = obj.GetComponent<Outline>();
         if (outline == null)
         {
             outline = obj.AddComponent<Outline>();
         }
 
-        // Áp dụng thông số
-        outline.OutlineMode = Outline.Mode.OutlineVisible;
-        outline.OutlineColor = idleOutlineColor;
-        outline.OutlineWidth = outlineWidth;
+        //outline.OutlineMode = Outline.Mode.OutlineVisible;
+        //outline.OutlineColor = highlightOutlineColor; // Gắn luôn màu sáng rực rỡ
+        //outline.OutlineWidth = outlineWidth;
 
-        // Tự động chuyển Layer sang Interactable để Raycast dò trúng
-        obj.layer = LayerMask.NameToLayer("Interactable");
+        //// ĐÂY LÀ ĐIỂM QUAN TRỌNG: Tắt viền đi để nó hoàn toàn vô hình
+        outline.enabled = false;
+
+        // 2. Chuyển Layer vật lý (CoACD) về Default để tối ưu FPS
+        obj.layer = LayerMask.NameToLayer("Default");
+
+        // 3. Tự động tạo "Bóng ma" bắt tia Raycast (Giữ nguyên như cũ)
+        Transform existingTarget = obj.transform.Find("AutoRaycastTarget");
+        if (existingTarget == null)
+        {
+            GameObject raycastTarget = new GameObject("AutoRaycastTarget");
+            raycastTarget.transform.SetParent(obj.transform);
+
+            raycastTarget.transform.localPosition = Vector3.zero;
+            raycastTarget.transform.localRotation = Quaternion.identity;
+            raycastTarget.transform.localScale = Vector3.one;
+
+            raycastTarget.layer = LayerMask.NameToLayer("Interactable");
+
+            BoxCollider box = raycastTarget.AddComponent<BoxCollider>();
+            box.isTrigger = true;
+
+            MeshFilter meshFilter = obj.GetComponent<MeshFilter>();
+            if (meshFilter != null && meshFilter.sharedMesh != null)
+            {
+                box.center = meshFilter.sharedMesh.bounds.center;
+                box.size = meshFilter.sharedMesh.bounds.size;
+            }
+            else
+            {
+                box.size = Vector3.one;
+            }
+        }
     }
 
     //void Update()
@@ -146,10 +175,12 @@ public class LabEquipmentManager : MonoBehaviour
     private void SetOutlineHighlight(GameObject obj, bool isHighlighted)
     {
         if (obj == null) return;
+
         Outline outline = obj.GetComponent<Outline>();
         if (outline != null)
         {
-            outline.OutlineColor = isHighlighted ? highlightOutlineColor : idleOutlineColor;
+            // Bật component lên nếu đang được nhìn trúng, tắt đi nếu lướt chuột ra chỗ khác
+            outline.enabled = isHighlighted;
         }
     }
 }

@@ -15,29 +15,21 @@ public class PlayerPickUp : MonoBehaviour
         RightHand = transform.GetChild(3);
     }
 
-    void OnInteract(InputAction.CallbackContext context)
+
+    public void OnTapInteract()
     {
-        if (InteractionManager.Ins.GetHoveredObject() == null) return;
-        if (context.performed)
-        {
-            if (context.interaction is UnityEngine.InputSystem.Interactions.HoldInteraction)
-            {
-                DoHoldAction();
-            }
-            else if (context.interaction is UnityEngine.InputSystem.Interactions.TapInteraction)
-            {
-                DoTapAction();
-            }
-        }
+        var hoveredObject = InteractionManager.Ins.GetHoveredObject();
+        if (hoveredObject == null) return;
+
+        hoveredObject.GetComponent<Rigidbody>().isKinematic = true;
+        hoveredObject.transform.SetParent(RightHand);
+        hoveredObject.transform.localPosition = Vector3.zero;
+
     }
 
-    private void DoTapAction()
+    public void OnHoldInteract()
     {
-        
-    }
-
-    private void DoHoldAction()
-    {
-        throw new NotImplementedException();
+        RightHand.GetChild(0).GetComponent<Rigidbody>().isKinematic = false;
+        RightHand.GetChild(0).transform.SetParent(null);
     }
 }
