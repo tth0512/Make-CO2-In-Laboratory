@@ -24,12 +24,15 @@ public class PlayerPickUp : MonoBehaviour
         hoveredObject.GetComponent<Rigidbody>().isKinematic = true;
         hoveredObject.transform.SetParent(RightHand);
         hoveredObject.transform.localPosition = Vector3.zero;
+        hoveredObject.transform.localRotation = Quaternion.identity;
 
     }
 
     public void OnHoldInteract()
     {
         var curObj = RightHand.GetChild(0);
+        if (curObj == null) return;
+
         curObj.GetComponent<Rigidbody>().isKinematic = false;
 
         float keepY = curObj.position.y;
