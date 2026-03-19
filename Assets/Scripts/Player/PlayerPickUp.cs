@@ -15,7 +15,6 @@ public class PlayerPickUp : MonoBehaviour
         RightHand = transform.GetChild(3);
     }
 
-
     public void OnTapInteract()
     {
         var hoveredObject = InteractionManager.Ins.GetHoveredObject();
