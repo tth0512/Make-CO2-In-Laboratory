@@ -6,10 +6,6 @@ public class LabEquipmentManager : MonoBehaviour
     [Header("1. KÉO CÁC PREFAB VÀO ĐÂY")]
     [Tooltip("Kéo các Prefab từ cửa sổ Project vào danh sách này.")]
     public List<GameObject> interactablePrefabs = new List<GameObject>();
-
-    [Header("2. Cài đặt Outline")]
-    public Color idleOutlineColor = new Color(1f, 1f, 1f, 0.3f);
-    public Color highlightOutlineColor = new Color(1f, 1f, 0f, 1f);
     [Range(1f, 10f)] public float outlineWidth = 4f;
 
     [Header("3. Cài đặt Raycast")]
@@ -91,6 +87,12 @@ public class LabEquipmentManager : MonoBehaviour
 
     private void SetupInitialOutline(GameObject obj)
     {
+        // Chỉ setup cho object thật sự có mesh (kể cả mesh nằm ở child)
+        if (!TryGetCombinedLocalBounds(obj, out Bounds localBounds))
+        {
+            return;
+        }
+
         // 1. Tự động gắn script Outline nhưng TẮT nó đi lúc ban đầu
         Outline outline = obj.GetComponent<Outline>();
         if (outline == null)
@@ -98,89 +100,111 @@ public class LabEquipmentManager : MonoBehaviour
             outline = obj.AddComponent<Outline>();
         }
 
-        //outline.OutlineMode = Outline.Mode.OutlineVisible;
-        //outline.OutlineColor = highlightOutlineColor; // Gắn luôn màu sáng rực rỡ
-        //outline.OutlineWidth = outlineWidth;
-
-        //// ĐÂY LÀ ĐIỂM QUAN TRỌNG: Tắt viền đi để nó hoàn toàn vô hình
+        outline.OutlineWidth = outlineWidth;
         outline.enabled = false;
 
         // 2. Chuyển Layer vật lý (CoACD) về Default để tối ưu FPS
         obj.layer = LayerMask.NameToLayer("Default");
 
-        // 3. Tự động tạo "Bóng ma" bắt tia Raycast (Giữ nguyên như cũ)
+        // 3. Tự động tạo/cập nhật "Bóng ma" bắt tia Raycast
         Transform existingTarget = obj.transform.Find("AutoRaycastTarget");
+        GameObject raycastTarget;
+
         if (existingTarget == null)
         {
-            GameObject raycastTarget = new GameObject("AutoRaycastTarget");
+            raycastTarget = new GameObject("AutoRaycastTarget");
             raycastTarget.transform.SetParent(obj.transform);
+        }
+        else
+        {
+            raycastTarget = existingTarget.gameObject;
+        }
 
-            raycastTarget.transform.localPosition = Vector3.zero;
-            raycastTarget.transform.localRotation = Quaternion.identity;
-            raycastTarget.transform.localScale = Vector3.one;
+        raycastTarget.transform.localPosition = Vector3.zero;
+        raycastTarget.transform.localRotation = Quaternion.identity;
+        raycastTarget.transform.localScale = Vector3.one;
+        raycastTarget.layer = LayerMask.NameToLayer("Interactable");
 
-            raycastTarget.layer = LayerMask.NameToLayer("Interactable");
+        BoxCollider box = raycastTarget.GetComponent<BoxCollider>();
+        if (box == null)
+        {
+            box = raycastTarget.AddComponent<BoxCollider>();
+        }
 
-            BoxCollider box = raycastTarget.AddComponent<BoxCollider>();
-            box.isTrigger = true;
+        box.isTrigger = true;
+        box.center = localBounds.center;
+        box.size = localBounds.size;
+    }
 
-            MeshFilter meshFilter = obj.GetComponent<MeshFilter>();
-            if (meshFilter != null && meshFilter.sharedMesh != null)
+    private bool TryGetCombinedLocalBounds(GameObject root, out Bounds localBounds)
+    {
+        Renderer[] renderers = root.GetComponentsInChildren<Renderer>(true);
+
+        bool hasValidMesh = false;
+        Bounds worldBounds = default;
+
+        foreach (Renderer renderer in renderers)
+        {
+            if (renderer == null) continue;
+            if (renderer.gameObject.name == "AutoRaycastTarget") continue;
+
+            bool validRenderer = false;
+
+            if (renderer is MeshRenderer)
             {
-                box.center = meshFilter.sharedMesh.bounds.center;
-                box.size = meshFilter.sharedMesh.bounds.size;
+                MeshFilter meshFilter = renderer.GetComponent<MeshFilter>();
+                validRenderer = meshFilter != null && meshFilter.sharedMesh != null;
+            }
+            else if (renderer is SkinnedMeshRenderer skinned)
+            {
+                validRenderer = skinned.sharedMesh != null;
+            }
+
+            if (!validRenderer) continue;
+
+            if (!hasValidMesh)
+            {
+                worldBounds = renderer.bounds;
+                hasValidMesh = true;
             }
             else
             {
-                box.size = Vector3.one;
+                worldBounds.Encapsulate(renderer.bounds);
             }
         }
-    }
 
-    //void Update()
-    //{
-    //    // Liên tục dò tâm (giữ nguyên logic bài trước)
-    //    CheckPlayerSight();
-    //}
-
-    //private void CheckPlayerSight()
-    //{
-    //    Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-    //    RaycastHit hit;
-
-    //    if (Physics.Raycast(ray, out hit, raycastRange, interactableLayer))
-    //    {
-    //        GameObject hitObj = hit.collider.gameObject;
-
-    //        // Kiểm tra xem vật trúng tia có nằm trong danh sách đã quét được lúc Awake không
-    //        if (trackedSceneObjects.Contains(hitObj))
-    //        {
-    //            if (hitObj != currentTarget)
-    //            {
-    //                SetOutlineHighlight(currentTarget, false);
-    //                SetOutlineHighlight(hitObj, true);
-    //                currentTarget = hitObj;
-    //            }
-    //            return;
-    //        }
-    //    }
-
-    //    if (currentTarget != null)
-    //    {
-    //        SetOutlineHighlight(currentTarget, false);
-    //        currentTarget = null;
-    //    }
-    //}
-
-    private void SetOutlineHighlight(GameObject obj, bool isHighlighted)
-    {
-        if (obj == null) return;
-
-        Outline outline = obj.GetComponent<Outline>();
-        if (outline != null)
+        if (!hasValidMesh)
         {
-            // Bật component lên nếu đang được nhìn trúng, tắt đi nếu lướt chuột ra chỗ khác
-            outline.enabled = isHighlighted;
+            localBounds = default;
+            return false;
         }
+
+        Vector3 min = worldBounds.min;
+        Vector3 max = worldBounds.max;
+
+        Vector3[] corners =
+        {
+            new Vector3(min.x, min.y, min.z),
+            new Vector3(min.x, min.y, max.z),
+            new Vector3(min.x, max.y, min.z),
+            new Vector3(min.x, max.y, max.z),
+            new Vector3(max.x, min.y, min.z),
+            new Vector3(max.x, min.y, max.z),
+            new Vector3(max.x, max.y, min.z),
+            new Vector3(max.x, max.y, max.z)
+        };
+
+        Vector3 localMin = root.transform.InverseTransformPoint(corners[0]);
+        Vector3 localMax = localMin;
+
+        for (int i = 1; i < corners.Length; i++)
+        {
+            Vector3 p = root.transform.InverseTransformPoint(corners[i]);
+            localMin = Vector3.Min(localMin, p);
+            localMax = Vector3.Max(localMax, p);
+        }
+
+        localBounds = new Bounds((localMin + localMax) * 0.5f, localMax - localMin);
+        return true;
     }
 }

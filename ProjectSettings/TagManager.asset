@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Interactable
   - Glass
+  - Cabinet
   layers:
   - Default
   - TransparentFX
