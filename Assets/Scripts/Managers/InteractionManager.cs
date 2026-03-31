@@ -29,6 +29,7 @@ public class InteractionManager : MonoBehaviour
 
             if (objectHitByRaycast != null)
             {
+                Debug.Log("Detected object: " + objectHitByRaycast.name);
                 if (objectHitByRaycast.CompareTag("Interactable"))
                 {
                     objectHitByRaycast.GetComponent<Outline>().enabled = true;
