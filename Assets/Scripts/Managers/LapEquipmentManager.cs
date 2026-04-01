@@ -87,100 +87,192 @@ public class LabEquipmentManager : MonoBehaviour
 
     private void SetupInitialOutline(GameObject obj)
     {
-        // Chỉ setup cho object thật sự có mesh (kể cả mesh nằm ở child)
-        if (!TryGetCombinedLocalBounds(obj, out Bounds localBounds))
+        // 1. Chuyển Layer vật lý (CoACD) về Default để tối ưu FPS
+        obj.layer = LayerMask.NameToLayer("Default");
+
+        // 2. Xóa các target cũ để tránh để lại collider lớn dạng cũ
+        Transform[] allChildren = obj.GetComponentsInChildren<Transform>(true);
+        for (int i = allChildren.Length - 1; i >= 0; i--)
+        {
+            Transform child = allChildren[i];
+            if (child == null || child == obj.transform) continue;
+            if (!child.name.StartsWith("AutoRaycastTarget")) continue;
+
+            if (Application.isPlaying)
+            {
+                Destroy(child.gameObject);
+            }
+            else
+            {
+                DestroyImmediate(child.gameObject);
+            }
+        }
+
+        // 3. Ưu tiên phần được đánh dấu thủ công, nếu không có thì fallback mesh ngoài cùng
+        List<Renderer> targetRenderers = GetPreferredRenderers(obj);
+        if (targetRenderers.Count == 0)
         {
             return;
         }
 
-        // 1. Tự động gắn script Outline nhưng TẮT nó đi lúc ban đầu
-        Outline outline = obj.GetComponent<Outline>();
-        if (outline == null)
+        for (int i = 0; i < targetRenderers.Count; i++)
         {
-            outline = obj.AddComponent<Outline>();
+            Renderer outerRenderer = targetRenderers[i];
+
+            // Outline chỉ nằm ở mesh ngoài cùng
+            Outline outline = outerRenderer.GetComponent<Outline>();
+            if (outline == null)
+            {
+                outline = outerRenderer.gameObject.AddComponent<Outline>();
+            }
+
+            outline.OutlineWidth = outlineWidth;
+            outline.enabled = false;
+
+            if (!TryGetRendererLocalBounds(outerRenderer, out Bounds localBounds))
+            {
+                continue;
+            }
+
+            GameObject raycastTarget = new GameObject("AutoRaycastTarget");
+            raycastTarget.transform.SetParent(outerRenderer.transform, false);
+            raycastTarget.layer = LayerMask.NameToLayer("Interactable");
+
+            BoxCollider box = raycastTarget.GetComponent<BoxCollider>();
+            if (box == null)
+            {
+                box = raycastTarget.AddComponent<BoxCollider>();
+            }
+
+            box.isTrigger = true;
+            box.center = localBounds.center;
+            box.size = localBounds.size;
         }
-
-        outline.OutlineWidth = outlineWidth;
-        outline.enabled = false;
-
-        // 2. Chuyển Layer vật lý (CoACD) về Default để tối ưu FPS
-        obj.layer = LayerMask.NameToLayer("Default");
-
-        // 3. Tự động tạo/cập nhật "Bóng ma" bắt tia Raycast
-        Transform existingTarget = obj.transform.Find("AutoRaycastTarget");
-        GameObject raycastTarget;
-
-        if (existingTarget == null)
-        {
-            raycastTarget = new GameObject("AutoRaycastTarget");
-            raycastTarget.transform.SetParent(obj.transform);
-        }
-        else
-        {
-            raycastTarget = existingTarget.gameObject;
-        }
-
-        raycastTarget.transform.localPosition = Vector3.zero;
-        raycastTarget.transform.localRotation = Quaternion.identity;
-        raycastTarget.transform.localScale = Vector3.one;
-        raycastTarget.layer = LayerMask.NameToLayer("Interactable");
-
-        BoxCollider box = raycastTarget.GetComponent<BoxCollider>();
-        if (box == null)
-        {
-            box = raycastTarget.AddComponent<BoxCollider>();
-        }
-
-        box.isTrigger = true;
-        box.center = localBounds.center;
-        box.size = localBounds.size;
     }
 
-    private bool TryGetCombinedLocalBounds(GameObject root, out Bounds localBounds)
+    private List<Renderer> GetPreferredRenderers(GameObject root)
+    {
+        List<Renderer> markedRenderers = GetMarkedRenderers(root);
+        if (markedRenderers.Count > 0)
+        {
+            return markedRenderers;
+        }
+
+        return GetOuterRenderers(root);
+    }
+
+    private List<Renderer> GetMarkedRenderers(GameObject root)
+    {
+        OutlinePartMarker[] markers = root.GetComponentsInChildren<OutlinePartMarker>(true);
+        List<Renderer> markedRenderers = new List<Renderer>();
+        HashSet<Renderer> unique = new HashSet<Renderer>();
+
+        for (int i = 0; i < markers.Length; i++)
+        {
+            Renderer[] renderers = markers[i].GetComponentsInChildren<Renderer>(true);
+            for (int j = 0; j < renderers.Length; j++)
+            {
+                Renderer renderer = renderers[j];
+                if (!IsValidRenderer(renderer)) continue;
+                if (!unique.Add(renderer)) continue;
+
+                markedRenderers.Add(renderer);
+            }
+        }
+
+        return markedRenderers;
+    }
+
+    private List<Renderer> GetOuterRenderers(GameObject root)
     {
         Renderer[] renderers = root.GetComponentsInChildren<Renderer>(true);
-
-        bool hasValidMesh = false;
-        Bounds worldBounds = default;
+        List<Renderer> validRenderers = new List<Renderer>();
 
         foreach (Renderer renderer in renderers)
         {
-            if (renderer == null) continue;
-            if (renderer.gameObject.name == "AutoRaycastTarget") continue;
+            if (!IsValidRenderer(renderer)) continue;
+            validRenderers.Add(renderer);
+        }
 
-            bool validRenderer = false;
+        List<Renderer> outerRenderers = new List<Renderer>();
 
-            if (renderer is MeshRenderer)
+        foreach (Renderer candidate in validRenderers)
+        {
+            bool isInsideAnother = false;
+
+            foreach (Renderer other in validRenderers)
             {
-                MeshFilter meshFilter = renderer.GetComponent<MeshFilter>();
-                validRenderer = meshFilter != null && meshFilter.sharedMesh != null;
+                if (candidate == other) continue;
+                if (!IsBoundsContained(candidate.bounds, other.bounds)) continue;
+
+                isInsideAnother = true;
+                break;
             }
-            else if (renderer is SkinnedMeshRenderer skinned)
-            {
-                validRenderer = skinned.sharedMesh != null;
-            }
 
-            if (!validRenderer) continue;
-
-            if (!hasValidMesh)
+            if (!isInsideAnother)
             {
-                worldBounds = renderer.bounds;
-                hasValidMesh = true;
-            }
-            else
-            {
-                worldBounds.Encapsulate(renderer.bounds);
+                outerRenderers.Add(candidate);
             }
         }
 
-        if (!hasValidMesh)
+        return outerRenderers;
+    }
+
+    private bool IsValidRenderer(Renderer renderer)
+    {
+        if (renderer == null) return false;
+        if (renderer.gameObject.name.StartsWith("AutoRaycastTarget")) return false;
+
+        if (renderer is MeshRenderer)
         {
-            localBounds = default;
+            MeshFilter meshFilter = renderer.GetComponent<MeshFilter>();
+            return meshFilter != null && meshFilter.sharedMesh != null;
+        }
+
+        if (renderer is SkinnedMeshRenderer skinned)
+        {
+            return skinned.sharedMesh != null;
+        }
+
+        return false;
+    }
+
+    private bool TryGetRendererLocalBounds(Renderer renderer, out Bounds localBounds)
+    {
+        if (renderer is MeshRenderer)
+        {
+            MeshFilter meshFilter = renderer.GetComponent<MeshFilter>();
+            if (meshFilter != null && meshFilter.sharedMesh != null)
+            {
+                localBounds = meshFilter.sharedMesh.bounds;
+                return true;
+            }
+        }
+        else if (renderer is SkinnedMeshRenderer skinned)
+        {
+            if (skinned.sharedMesh != null)
+            {
+                localBounds = skinned.sharedMesh.bounds;
+                return true;
+            }
+        }
+
+        localBounds = default;
+        return false;
+    }
+
+    private bool IsBoundsContained(Bounds inner, Bounds outer)
+    {
+        float innerVolume = inner.size.x * inner.size.y * inner.size.z;
+        float outerVolume = outer.size.x * outer.size.y * outer.size.z;
+
+        if (outerVolume <= innerVolume)
+        {
             return false;
         }
 
-        Vector3 min = worldBounds.min;
-        Vector3 max = worldBounds.max;
+        Vector3 min = inner.min;
+        Vector3 max = inner.max;
 
         Vector3[] corners =
         {
@@ -194,17 +286,14 @@ public class LabEquipmentManager : MonoBehaviour
             new Vector3(max.x, max.y, max.z)
         };
 
-        Vector3 localMin = root.transform.InverseTransformPoint(corners[0]);
-        Vector3 localMax = localMin;
-
-        for (int i = 1; i < corners.Length; i++)
+        for (int i = 0; i < corners.Length; i++)
         {
-            Vector3 p = root.transform.InverseTransformPoint(corners[i]);
-            localMin = Vector3.Min(localMin, p);
-            localMax = Vector3.Max(localMax, p);
+            if (!outer.Contains(corners[i]))
+            {
+                return false;
+            }
         }
 
-        localBounds = new Bounds((localMin + localMax) * 0.5f, localMax - localMin);
         return true;
     }
 }
