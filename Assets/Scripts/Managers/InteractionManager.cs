@@ -32,11 +32,21 @@ public class InteractionManager : MonoBehaviour
                 Debug.Log("Detected object: " + objectHitByRaycast.name);
                 if (objectHitByRaycast.CompareTag("Interactable"))
                 {
+                    if (hoveredObject && objectHitByRaycast != hoveredObject)
+                    {
+                        hoveredObject.GetComponent<Outline>().enabled = false;
+                    }
+
                     objectHitByRaycast.GetComponent<Outline>().enabled = true;
                     hoveredObject = objectHitByRaycast;
                 }
                 else if (objectHitByRaycast.CompareTag("Cabinet"))
                 {
+                    if (hoveredObject && objectHitByRaycast != hoveredObject)
+                    {
+                        hoveredObject.GetComponent<Outline>().enabled = false;
+                    }
+
                     objectHitByRaycast.GetComponent<Outline>().enabled = true;
                     hoveredObject = objectHitByRaycast;
                 }
