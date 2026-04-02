@@ -29,8 +29,8 @@ public class InteractionManager : MonoBehaviour
 
             if (objectHitByRaycast != null)
             {
-                Debug.Log("Detected object: " + objectHitByRaycast.name);
-                if (objectHitByRaycast.CompareTag("Interactable"))
+                //Debug.Log("Detected object: " + objectHitByRaycast.name);
+                if (objectHitByRaycast.CompareTag("Interactable") || objectHitByRaycast.CompareTag("showcase"))
                 {
                     if (hoveredObject && objectHitByRaycast != hoveredObject)
                     {

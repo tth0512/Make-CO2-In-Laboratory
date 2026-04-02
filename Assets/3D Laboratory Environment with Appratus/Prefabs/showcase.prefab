@@ -93,8 +93,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: 2bece4266c1175a4faabdb2e7063f6fb, type: 2}
     - target: {fileID: -248534150029072956, guid: e03cbcdcee58c8e4ab6df222b32f4812, type: 3}
+      propertyPath: m_Name
+      value: right
+      objectReference: {fileID: 0}
+    - target: {fileID: -248534150029072956, guid: e03cbcdcee58c8e4ab6df222b32f4812, type: 3}
       propertyPath: m_TagString
-      value: Interactable
+      value: showcase
       objectReference: {fileID: 0}
     - target: {fileID: -248534150029072956, guid: e03cbcdcee58c8e4ab6df222b32f4812, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -141,8 +145,12 @@ PrefabInstance:
       value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 4450908951402061483, guid: e03cbcdcee58c8e4ab6df222b32f4812, type: 3}
+      propertyPath: m_Name
+      value: left
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450908951402061483, guid: e03cbcdcee58c8e4ab6df222b32f4812, type: 3}
       propertyPath: m_TagString
-      value: Interactable
+      value: showcase
       objectReference: {fileID: 0}
     - target: {fileID: 4450908951402061483, guid: e03cbcdcee58c8e4ab6df222b32f4812, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -173,6 +181,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4450908951402061483, guid: e03cbcdcee58c8e4ab6df222b32f4812, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7563660236533562997}
+    - targetCorrespondingSourceObject: {fileID: 4450908951402061483, guid: e03cbcdcee58c8e4ab6df222b32f4812, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6594615567169457816}
     - targetCorrespondingSourceObject: {fileID: -248534150029072956, guid: e03cbcdcee58c8e4ab6df222b32f4812, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4947482304433086544}
@@ -182,7 +193,20 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -248534150029072956, guid: e03cbcdcee58c8e4ab6df222b32f4812, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8535332612584200150}
+    - targetCorrespondingSourceObject: {fileID: -248534150029072956, guid: e03cbcdcee58c8e4ab6df222b32f4812, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6054102948356721883}
   m_SourcePrefab: {fileID: 100100000, guid: e03cbcdcee58c8e4ab6df222b32f4812, type: 3}
+--- !u!4 &1580516177188453045 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -3669171936676906012, guid: e03cbcdcee58c8e4ab6df222b32f4812, type: 3}
+  m_PrefabInstance: {fileID: 6411829023757369681}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2085040244809125021 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4905802667250732492, guid: e03cbcdcee58c8e4ab6df222b32f4812, type: 3}
+  m_PrefabInstance: {fileID: 6411829023757369681}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2627396316370543765 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -248534150029072956, guid: e03cbcdcee58c8e4ab6df222b32f4812, type: 3}
@@ -207,7 +231,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.1401751, y: 2.6189861, z: 0.062185057}
+  m_Size: {x: 1.1401751, y: 2.6189861, z: 0.1}
   m_Center: {x: 0.5700877, y: -0.00000011920929, z: -0.031092577}
 --- !u!114 &1035118390013026944
 MonoBehaviour:
@@ -331,6 +355,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2cf29fafe4da3e4c886446396b91f19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OutlinePartMarker
+--- !u!114 &6054102948356721883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2627396316370543765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67f1db0d26f343041a4b2c7aadc17295, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CabinetDoorInteractable
+  hinge: {fileID: 1580516177188453045}
+  openAngle: -90
+  duration: 0.25
+  rotationAxis: {x: 0, y: 1, z: 0}
 --- !u!1 &7295737514368966650 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4450908951402061483, guid: e03cbcdcee58c8e4ab6df222b32f4812, type: 3}
@@ -355,7 +395,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.1401751, y: 2.6189861, z: 0.062185057}
+  m_Size: {x: 1.1401751, y: 2.6189861, z: 0.1}
   m_Center: {x: -0.57008755, y: -0.00000011920929, z: -0.031092577}
 --- !u!114 &2487415002387724089
 MonoBehaviour:
@@ -479,3 +519,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2cf29fafe4da3e4c886446396b91f19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OutlinePartMarker
+--- !u!114 &6594615567169457816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7295737514368966650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67f1db0d26f343041a4b2c7aadc17295, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CabinetDoorInteractable
+  hinge: {fileID: 2085040244809125021}
+  openAngle: 90
+  duration: 0.25
+  rotationAxis: {x: 0, y: 1, z: 0}
