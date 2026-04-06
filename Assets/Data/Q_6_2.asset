@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4da322fee81a473299d99dc0e4125745, type: 3}
+  m_Name: Q_6_2
+  m_EditorClassIdentifier: Assembly-CSharp::Question
+  questionText: "Completely burning 12.8g of sulfur in oxygen gas produces SO2\u200B.
+    The number of moles of oxygen that reacted is:"
+  answers:
+  - 0.2
+  - 0.4
+  - 0.6
+  - 0.8
+  correctIndex: 1
+  explanation: "Explanation: nS\u200B=12.8/32\u200B=0.4 mol \nChemical Equation:
+    S+O2\u200B\u2192SO2\u200B \nBased on the equation, 1 mol S reacts with 1 mol
+    O2\u200B. Therefore, 0.4 mol S reacts with 0.4 mol O2\u200B.\n"
