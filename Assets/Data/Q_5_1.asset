@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4da322fee81a473299d99dc0e4125745, type: 3}
+  m_Name: Q_5_1
+  m_EditorClassIdentifier: Assembly-CSharp::Question
+  questionText: 'An iron sheet weighing 28g is left in the air; it reacts with oxygen
+    to form rust. After some time, the sheet is weighed again, and the mass is 31.2g.
+    The mass of oxygen that reacted is:'
+  answers:
+  - 3.2 g
+  - 1.6 g
+  - 6.4 g
+  - 24.8 g
+  correctIndex: 0
+  explanation: "Explanation: According to the Law of Conservation of Mass: Initial
+    mass of iron+Mass of reacted oxygen=Final mass of iron Mass of oxygen=31.2\u221228=3.2
+    (grams)"

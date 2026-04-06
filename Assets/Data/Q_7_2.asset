@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4da322fee81a473299d99dc0e4125745, type: 3}
+  m_Name: Q_7_2
+  m_EditorClassIdentifier: Assembly-CSharp::Question
+  questionText: Which factor is used to increase the reaction rate when sprinkling
+    yeast into cooked starch (rice, corn, potatoes) to brew alcohol?
+  answers:
+  - Temperature.
+  - Catalyst.
+  - Pressure.
+  - 'Concentration. '
+  correctIndex: 1
+  explanation: 'Explanation: Yeast acts as a biological catalyst in the fermentation
+    process.
+
+'

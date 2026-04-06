@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4da322fee81a473299d99dc0e4125745, type: 3}
+  m_Name: Q_6_1
+  m_EditorClassIdentifier: Assembly-CSharp::Question
+  questionText: 'When the reaction yield is less than 100%: '
+  answers:
+  - The actual amount of reactant used is less than the theoretical amount.
+  - The actual amount of product obtained is greater than the theoretical amount.
+  - 'The actual amount of product obtained is less than the theoretical amount. '
+  - 'The actual amount of product obtained is greater than or equal to the theoretical
+    amount. '
+  correctIndex: 2
+  explanation: 'Explanation:
+
+    When the reaction efficiency is less than 100%,
+    the actual amount of product obtained will be less than the amount calculated
+    in the chemical equation.'

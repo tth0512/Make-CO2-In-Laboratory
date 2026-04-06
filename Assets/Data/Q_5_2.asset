@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4da322fee81a473299d99dc0e4125745, type: 3}
+  m_Name: Q_5_2
+  m_EditorClassIdentifier: Assembly-CSharp::Question
+  questionText: " Heating 12g of limestone (CaCO3\u200B) produces a solid mixture
+    weighing 8.4g. The mass of CO2\u200B gas released is:"
+  answers:
+  - 3.6 g
+  - 2.8 g
+  - 1.2 g
+  - 2.4 g
+  correctIndex: 0
+  explanation: "Mass of limestone=Mass of remaining solid+Mass of released CO2\u200B
+    Mass of CO2\u200B=12\u22128.4=3.6 (grams)"
