@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77784cc523533374597cd455c3142116, type: 3}
   m_Name: QuizSet_Lec07
   m_EditorClassIdentifier: Assembly-CSharp::QuizSet
-  lessonId: 0
-  questions: []
+  lessonId: 7
+  questions:
+  - {fileID: 11400000, guid: 0cf6edfb83e695eb6a8a1423bc477294, type: 2}
+  - {fileID: 11400000, guid: ba7d1de01119310a78ee1ab3656d5964, type: 2}

@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4da322fee81a473299d99dc0e4125745, type: 3}
   m_Name: Q_3_1
   m_EditorClassIdentifier: Assembly-CSharp::Question
-  questionText: 
+  questionText: "At standard conditions (25\u2218C and 1 bar), 1 mole of any gas
+    occupies a volume of:"
   answers:
-  - 
-  - 
-  - 
-  - 
-  correctIndex: 0
-  explanation: 
+  - 2.479 liters.
+  - 24.79 liters.
+  - 22.79 liters.
+  - '22.40 liters. '
+  correctIndex: 1
+  explanation: "Explanation: Under standard conditions (25\xB0C and 1 bar), 1 mole
+    of any gas occupies a volume of 24.79 liters."

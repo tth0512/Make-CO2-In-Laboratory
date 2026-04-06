@@ -12,11 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4da322fee81a473299d99dc0e4125745, type: 3}
   m_Name: Q_2_2
   m_EditorClassIdentifier: Assembly-CSharp::Question
-  questionText: 
+  questionText: 'Which of the following signs indicate that a chemical reaction has
+    occurred? '
   answers:
-  - 
-  - 
-  - 
-  - 
-  correctIndex: 0
-  explanation: 
+  - Change in color.
+  - Release of heat and light.
+  - Appearance of a gas or a precipitate.
+  - 'All of the above. '
+  correctIndex: 3
+  explanation: 'Explanation: Recognizable signs of new substances forming include
+    color changes, the appearance of gas bubbles, or the formation of a precipitate.
+    Heat release and light emission are also common indicators of a chemical reaction.
+
+'

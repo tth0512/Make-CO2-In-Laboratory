@@ -12,11 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4da322fee81a473299d99dc0e4125745, type: 3}
   m_Name: Q_5_1
   m_EditorClassIdentifier: Assembly-CSharp::Question
-  questionText: 
+  questionText: 'An iron sheet weighing 28g is left in the air; it reacts with oxygen
+    to form rust. After some time, the sheet is weighed again, and the mass is 31.2g.
+    The mass of oxygen that reacted is:'
   answers:
-  - 
-  - 
-  - 
-  - 
+  - 3.2 g
+  - 1.6 g
+  - 6.4 g
+  - 24.8 g
   correctIndex: 0
-  explanation: 
+  explanation: "Explanation: According to the Law of Conservation of Mass: Initial
+    mass of iron+Mass of reacted oxygen=Final mass of iron Mass of oxygen=31.2\u221228=3.2
+    (grams)"

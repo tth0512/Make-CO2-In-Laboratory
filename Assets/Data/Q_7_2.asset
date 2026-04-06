@@ -12,11 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4da322fee81a473299d99dc0e4125745, type: 3}
   m_Name: Q_7_2
   m_EditorClassIdentifier: Assembly-CSharp::Question
-  questionText: 
+  questionText: Which factor is used to increase the reaction rate when sprinkling
+    yeast into cooked starch (rice, corn, potatoes) to brew alcohol?
   answers:
-  - 
-  - 
-  - 
-  - 
-  correctIndex: 0
-  explanation: 
+  - Temperature.
+  - Catalyst.
+  - Pressure.
+  - 'Concentration. '
+  correctIndex: 1
+  explanation: 'Explanation: Yeast acts as a biological catalyst in the fermentation
+    process.
+
+'
