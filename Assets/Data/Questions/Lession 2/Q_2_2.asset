@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bf49d84cf156cd94b8dcda3db3afe5be, type: 3}
-  m_Name: Q_6_2
+  m_Name: Q_2_2
   m_EditorClassIdentifier: Assembly-CSharp::Question
-  questionID: 
-  questionText: 
+  questionID: question2.2
+  questionText: choose abcd
   answers:
-  - 
-  - 
-  - 
-  - 
-  correctIndex: 0
+  - AA
+  - BB
+  - CC
+  - DD
+  correctIndex: 3
   explanation: 

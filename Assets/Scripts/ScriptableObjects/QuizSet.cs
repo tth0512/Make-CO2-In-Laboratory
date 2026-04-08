@@ -5,5 +5,5 @@ using System.Collections.Generic;
 public class QuizSet : ScriptableObject
 {
     public int lessonId;
-    public List<Question> questions;
+    public List<QuestionData> questions;
 }
