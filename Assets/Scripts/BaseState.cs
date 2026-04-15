@@ -1,12 +1,12 @@
 using UnityEngine;
 
-public class ExperimentState
+public abstract class BaseState<T>
 {
-    protected StateMachine stateMachine;
+    protected T context;
 
-    public ExperimentState(StateMachine stateMachine)
+    public BaseState(T context)
     {
-        this.stateMachine = stateMachine;
+        this.context = context;
     }
 
     public virtual void EnterState() { }

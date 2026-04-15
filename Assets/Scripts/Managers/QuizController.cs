@@ -1,48 +1,40 @@
 using UnityEngine;
-using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Collections;
-using TMPro;
+using System;
 
 public class QuizController : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI questionText;
+    public event Action QuizFinished;
 
-    [SerializeField] private GameObject answerButtonPrefab;
-    [SerializeField] private Transform answerContainer;
-
-    [SerializeField] private TextMeshProUGUI explainationText;
+    [SerializeField] private QuizBoardUI quizBoardUI;
 
     [SerializeField] private float nextQuestionDelay = 0.75f;
 
-    private List<QuestionData> currentQuestions = new List<QuestionData>();
-    private int currentQuestionIndex;
+    private readonly QuizModel model = new QuizModel();
+    private readonly List<int> answerIndexMap = new List<int>();
+
     private bool waitingForNextQuestion;
-
-    private void Awake()
-    {
-        //questionText = transform.Find("QuestionText").GetComponent<TextMeshPro>();
-        //answerButtonPrefab = Resources.Load<GameObject>("AnswerButton");
-        //answerContainer = transform.Find("AnswerContainer");
-        //explainationText = transform.Find("ExplainationText").GetComponent<TextMeshPro>();
-    }
-
-    private void Start()
-    {
-        Load("Lession 2");
-    }
+    private Coroutine nextQuestionCoroutine;
 
     public void Load(string lessonKey)
     {
-        currentQuestions = AssetManager.Ins.GetQuestionsByLesson(lessonKey);
-        currentQuestionIndex = 0;
+        List<QuestionData> questions = AssetManager.Ins != null
+            ? AssetManager.Ins.GetQuestionsByLesson(lessonKey)
+            : new List<QuestionData>();
+
+        model.SetQuestions(questions);
         waitingForNextQuestion = false;
 
-        if (currentQuestions == null || currentQuestions.Count == 0)
+        if (nextQuestionCoroutine != null)
         {
-            questionText.text = "Không có câu hỏi.";
-            explainationText.text = string.Empty;
-            ClearAnswerButtons();
+            StopCoroutine(nextQuestionCoroutine);
+            nextQuestionCoroutine = null;
+        }
+
+        if (!model.HasQuestions)
+        {
+            quizBoardUI.ShowNoQuestion("Không có câu hỏi.");
             return;
         }
 
@@ -51,32 +43,21 @@ public class QuizController : MonoBehaviour
 
     private void ShowCurrentQuestion()
     {
-        if (currentQuestionIndex >= currentQuestions.Count)
+        if (model.IsCompleted)
         {
-            questionText.text = "Hoàn thành bài học!";
-            explainationText.text = string.Empty;
-            ClearAnswerButtons();
+            quizBoardUI.ShowCompleted("Hoàn thành bài học!");
+            QuizFinished?.Invoke();
             return;
         }
 
         waitingForNextQuestion = false;
-        explainationText.text = string.Empty;
-        ClearAnswerButtons();
+        quizBoardUI.SetExplainationText(string.Empty);
 
-        QuestionData question = currentQuestions[currentQuestionIndex];
-        questionText.text = question.questionText;
+        QuestionData question = model.CurrentQuestion;
+        List<string> answerLabels = BuildAnswerLabels(question);
 
-        for (int i = 0; i < question.answers.Length; i++)
-        {
-            int answerIndex = i;
-            var buttonObj = Instantiate(answerButtonPrefab, answerContainer);
-            var buttonText = buttonObj.GetComponentInChildren<TextMeshProUGUI>();
-            string choicePrefix = GetChoicePrefix(i);
-            buttonText.text = $"{choicePrefix}.   {question.answers[i]}";
-
-            var button = buttonObj.GetComponent<Button>();
-            button.onClick.AddListener(() => OnAnswerSelected(answerIndex));
-        }
+        quizBoardUI.SetQuestionText(question.questionText);
+        quizBoardUI.BindAnswers(answerLabels, OnAnswerSelected);
     }
 
     private string GetChoicePrefix(int index)
@@ -84,33 +65,58 @@ public class QuizController : MonoBehaviour
         return ((char)('A' + index)).ToString();
     }
 
-    private void OnAnswerSelected(int selectedIndex)
+    private List<string> BuildAnswerLabels(QuestionData question)
+    {
+        answerIndexMap.Clear();
+        List<string> labels = new List<string>();
+
+        if (question == null || question.answers == null)
+        {
+            return labels;
+        }
+
+        for (int i = 0; i < question.answers.Length; i++)
+        {
+            string answerText = question.answers[i];
+            if (string.IsNullOrWhiteSpace(answerText)) continue;
+
+            string choicePrefix = GetChoicePrefix(labels.Count);
+            labels.Add($"{choicePrefix}.   {answerText}");
+            answerIndexMap.Add(i);
+        }
+
+        return labels;
+    }
+
+    private void OnAnswerSelected(int displayIndex)
     {
         if (waitingForNextQuestion) return;
+        if (displayIndex < 0 || displayIndex >= answerIndexMap.Count) return;
 
-        QuestionData question = currentQuestions[currentQuestionIndex];
+        int selectedIndex = answerIndexMap[displayIndex];
+        QuestionData question = model.CurrentQuestion;
         bool isCorrect = selectedIndex == question.correctIndex;
 
-        explainationText.text = (isCorrect ? "Right!\n" : "Wrong!\n") + question.explanation;
+        quizBoardUI.SetExplainationText((isCorrect ? "Right!\n" : "Wrong!\n") + question.explanation);
 
         waitingForNextQuestion = true;
-        StartCoroutine(LoadNextQuestionAfterDelay());
+        nextQuestionCoroutine = StartCoroutine(LoadNextQuestionAfterDelay());
     }
 
     private IEnumerator LoadNextQuestionAfterDelay()
     {
         yield return new WaitForSeconds(nextQuestionDelay);
-        currentQuestionIndex++;
+        model.MoveNext();
+        nextQuestionCoroutine = null;
         ShowCurrentQuestion();
     }
 
-    private void ClearAnswerButtons()
+    private void OnDisable()
     {
-        if (answerContainer == null) return;
-
-        for (int i = answerContainer.childCount - 1; i >= 0; i--)
+        if (nextQuestionCoroutine != null)
         {
-            Destroy(answerContainer.GetChild(i).gameObject);
+            StopCoroutine(nextQuestionCoroutine);
+            nextQuestionCoroutine = null;
         }
     }
 }

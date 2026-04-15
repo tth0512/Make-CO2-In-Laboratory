@@ -19,6 +19,7 @@ public class PlayerPickUp : MonoBehaviour
 
         if (TryGetInteractable(hoveredObject, out IInteractable interactable))
         {
+            Debug.Log("Interacting with: " + hoveredObject.name);
             interactable.Interact(this);
             return;
         }
