@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -6463885910506184199}
   m_Layer: 0
   m_Name: Erlenmeyer_flask with water
-  m_TagString: Glass
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 64
@@ -1624,6 +1624,10 @@ PrefabInstance:
     - target: {fileID: 1069180653122905049, guid: f0aa1c925210d3e478b7bbdba5252af4, type: 3}
       propertyPath: m_Name
       value: Erlenmeyer_flask3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069180653122905049, guid: f0aa1c925210d3e478b7bbdba5252af4, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 1069180653122905049, guid: f0aa1c925210d3e478b7bbdba5252af4, type: 3}
       propertyPath: m_StaticEditorFlags

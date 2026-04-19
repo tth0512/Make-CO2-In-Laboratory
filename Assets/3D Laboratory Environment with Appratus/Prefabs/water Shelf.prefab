@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3352945271959302864}
   - component: {fileID: -1495303831145320659}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: water Shelf
   m_TagString: Untagged
   m_Icon: {fileID: 0}

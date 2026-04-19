@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2408291052157207508}
   m_Layer: 0
   m_Name: florence_flask with water
-  m_TagString: Glass
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 64

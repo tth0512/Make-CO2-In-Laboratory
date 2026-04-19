@@ -282,9 +282,10 @@ GameObject:
   - component: {fileID: 1357819614724212135}
   - component: {fileID: -311061786501663627}
   - component: {fileID: 8290073673070343015}
+  - component: {fileID: 8385154923954512469}
   m_Layer: 0
   m_Name: tap
-  m_TagString: Untagged
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1919,3 +1920,11 @@ MonoBehaviour:
     seed: 0
   _colliderData: {fileID: 0}
   _colliders: []
+--- !u!33 &8385154923954512469
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6296904470243763194}
+  m_Mesh: {fileID: 0}

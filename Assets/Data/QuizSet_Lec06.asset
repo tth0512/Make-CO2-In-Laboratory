@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77784cc523533374597cd455c3142116, type: 3}
+  m_Name: QuizSet_Lec06
+  m_EditorClassIdentifier: Assembly-CSharp::QuizSet
+  lessonId: 6
+  questions:
+  - {fileID: 11400000, guid: baaa07f1656300a66b231fad93137fa1, type: 2}
+  - {fileID: 11400000, guid: cfb6879c1f28bf6508a18e99c9b90872, type: 2}

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 7482059054694919328}
   m_Layer: 0
   m_Name: Beaker water
-  m_TagString: Glass
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 64
@@ -1741,6 +1741,10 @@ PrefabInstance:
     - target: {fileID: 2870593904137413113, guid: a572e70971ff81f4992e8360d5356395, type: 3}
       propertyPath: m_Name
       value: Beaker liquid
+      objectReference: {fileID: 0}
+    - target: {fileID: 2870593904137413113, guid: a572e70971ff81f4992e8360d5356395, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 2870593904137413113, guid: a572e70971ff81f4992e8360d5356395, type: 3}
       propertyPath: m_StaticEditorFlags

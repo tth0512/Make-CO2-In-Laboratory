@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: -3541366912165246604}
   m_Layer: 0
   m_Name: Graduated_Cylinder with liquid
-  m_TagString: Glass
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 64

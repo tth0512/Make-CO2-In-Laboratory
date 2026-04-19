@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 880358058671172230}
   m_Layer: 0
   m_Name: Beaker
-  m_TagString: Glass
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

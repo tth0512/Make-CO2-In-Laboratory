@@ -1,7 +1,4 @@
-﻿using System;
-using System.Xml.Schema;
-using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerPickUp : MonoBehaviour
@@ -15,25 +12,33 @@ public class PlayerPickUp : MonoBehaviour
         RightHand = transform.GetChild(3);
     }
 
-
     public void OnTapInteract()
     {
         var hoveredObject = InteractionManager.Ins.GetHoveredObject();
         if (hoveredObject == null) return;
 
-        hoveredObject.GetComponent<Rigidbody>().isKinematic = true;
-        hoveredObject.transform.SetParent(RightHand);
-        hoveredObject.transform.localPosition = Vector3.zero;
-        hoveredObject.transform.localRotation = Quaternion.identity;
+        if (TryGetInteractable(hoveredObject, out IInteractable interactable))
+        {
+            Debug.Log("Interacting with: " + hoveredObject.name);
+            interactable.Interact(this);
+            return;
+        }
+
+        TryPickUpObject(hoveredObject);
 
     }
 
     public void OnHoldInteract()
     {
+        if (RightHand.childCount == 0) return;
         var curObj = RightHand.GetChild(0);
         if (curObj == null) return;
 
-        curObj.GetComponent<Rigidbody>().isKinematic = false;
+        Rigidbody body = curObj.GetComponent<Rigidbody>();
+        if (body != null)
+        {
+            body.isKinematic = false;
+        }
 
         float keepY = curObj.position.y;
         Vector3 dropPosition = curObj.position;
@@ -52,5 +57,50 @@ public class PlayerPickUp : MonoBehaviour
 
         curObj.SetParent(null);
         curObj.position = dropPosition;
+    }
+
+    public void TryPickUpObject(GameObject target)
+    {
+        if (target == null) return;
+
+        Rigidbody body = target.GetComponent<Rigidbody>();
+        if (body != null)
+        {
+            body.isKinematic = true;
+        }
+
+        target.transform.SetParent(RightHand);
+        target.transform.localPosition = Vector3.zero;
+        target.transform.localRotation = Quaternion.identity;
+    }
+
+    private bool TryGetInteractable(GameObject target, out IInteractable interactable)
+    {
+        interactable = FindInteractableOnObject(target);
+        if (interactable != null) return true;
+
+        Transform parent = target.transform.parent;
+        while (parent != null)
+        {
+            interactable = FindInteractableOnObject(parent.gameObject);
+            if (interactable != null) return true;
+            parent = parent.parent;
+        }
+
+        return false;
+    }
+
+    private IInteractable FindInteractableOnObject(GameObject target)
+    {
+        MonoBehaviour[] behaviours = target.GetComponents<MonoBehaviour>();
+        for (int i = 0; i < behaviours.Length; i++)
+        {
+            if (behaviours[i] is IInteractable interactable)
+            {
+                return interactable;
+            }
+        }
+
+        return null;
     }
 }
