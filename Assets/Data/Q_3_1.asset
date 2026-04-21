@@ -18,7 +18,7 @@ MonoBehaviour:
   - 2.479 liters.
   - 24.79 liters.
   - 22.79 liters.
-  - '22.40 liters. '
+  - 22.40 liters. 
   correctIndex: 1
   explanation: "Explanation: Under standard conditions (25\xB0C and 1 bar), 1 mole
     of any gas occupies a volume of 24.79 liters."
