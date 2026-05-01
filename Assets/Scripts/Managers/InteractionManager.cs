@@ -1,20 +1,27 @@
 using UnityEngine;
 
+[DefaultExecutionOrder(-200)]
 public class InteractionManager : MonoBehaviour
 {
-    public static InteractionManager Ins { get; set; }
+    private static InteractionManager _instance { get; set; }
+    public static InteractionManager Ins
+    {
+        get
+        {
+            return _instance;
+        }
+    }
     private GameObject hoveredObject;
-
     public GameObject GetHoveredObject() => hoveredObject;
     private void Awake()
     {
-        if (Ins != null && Ins != this)
+        if (_instance != null && _instance != this)
         {
             Destroy(this);
         }
         else
         {
-            Ins = this;
+            _instance = this;
         }
     }
 

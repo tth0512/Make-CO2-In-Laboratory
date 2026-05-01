@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ChalkboardQuestionState : BaseChalkboardState
 {
@@ -11,7 +12,7 @@ public class ChalkboardQuestionState : BaseChalkboardState
 
     public override void UpdateState()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
         {
             HandleExitClick();
         }

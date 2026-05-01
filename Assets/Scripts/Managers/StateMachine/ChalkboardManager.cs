@@ -1,5 +1,6 @@
 using UnityEngine;
 using Cinemachine;
+[DefaultExecutionOrder(0)]
 
 public class ChalkboardManager : MonoBehaviour, IInteractable
 {
@@ -10,12 +11,14 @@ public class ChalkboardManager : MonoBehaviour, IInteractable
     public QuizController quizController;
     public string lessonKey = "Lesson 2";
 
+    private PlayerManager playerManager;
     // Cỗ máy StateMachine siêu mượt của chúng ta
     public StateMachine<BaseChalkboardState> stateMachine { get; private set; }
     public int lastSelectedAnswer;
 
     void Awake()
     {
+        playerManager = PlayerManager.Instance;
         stateMachine = new StateMachine<BaseChalkboardState>();
 
         // Nạp các State
@@ -71,15 +74,14 @@ public class ChalkboardManager : MonoBehaviour, IInteractable
             chalkboardCam.Priority = 20;
         }
 
-        SetPlayerControl(false);
-        SetGameplayInteraction(false);
+        playerManager.DisablePlayer();
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
         if (quizController != null)
         {
-            quizController.Load(lessonKey);
+            quizController.Load(lessonKey); 
         }
     }
 
@@ -95,31 +97,12 @@ public class ChalkboardManager : MonoBehaviour, IInteractable
             chalkboardCam.Priority = 0;
         }
 
-        SetPlayerControl(true);
-        SetGameplayInteraction(true);
+        playerManager.EnablePlayer();
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
-
-    private void SetPlayerControl(bool isEnabled)
-    {
-        if (playerController == null) return;
-
-        PlayerController controller = playerController.GetComponent<PlayerController>();
-        if (controller != null)
-        {
-            controller.enabled = isEnabled;
-        }
-    }
-
-    private void SetGameplayInteraction(bool isEnabled)
-    {
-        if (InteractionManager.Ins != null)
-        {
-            InteractionManager.Ins.enabled = isEnabled;
-        }
-    }
+    
 
     private void HandleQuizFinished()
     {
