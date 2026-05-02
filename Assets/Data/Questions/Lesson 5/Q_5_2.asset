@@ -10,14 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bf49d84cf156cd94b8dcda3db3afe5be, type: 3}
-  m_Name: Q_1_1 1
+  m_Name: Q_5_2
   m_EditorClassIdentifier: Assembly-CSharp::Question
-  questionID: question1.2
-  questionText: choose abcd
+  questionID: question4.2
+  questionText: "Heating 12g of limestone (CaCO3\u200B) produces a solid mixture
+    weighing 8.4g. The mass of CO2\u200B gas released is: "
   answers:
-  - AA
-  - BB
-  - CC
-  - DD
-  correctIndex: 3
-  explanation: 
+  - 3.6
+  - 1.8
+  - 2.4
+  - 6.4
+  correctIndex: 0
+  explanation: "Mass of limestone=Mass of remaining solid+Mass of released CO2\u200B
+    Mass of CO2\u200B=12\u22128.4=3.6 (grams)"

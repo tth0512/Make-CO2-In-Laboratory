@@ -13,11 +13,17 @@ MonoBehaviour:
   m_Name: Q_2_2
   m_EditorClassIdentifier: Assembly-CSharp::Question
   questionID: question2.2
-  questionText: choose abcd
+  questionText: 'The molar volumes of any two gases are equal if they are measured
+    at:
+
+'
   answers:
-  - AA
-  - BB
-  - CC
-  - DD
+  - The same temperature.
+  - The same pressure.
+  - The same temperature but different pressures.
+  - The same temperature and pressure conditions.
   correctIndex: 3
-  explanation: 
+  explanation: 'The molar volume of any gas is equal if measured under the same temperature
+    and pressure conditions.
+
+'

@@ -13,11 +13,19 @@ MonoBehaviour:
   m_Name: Q_1_1
   m_EditorClassIdentifier: Assembly-CSharp::Question
   questionID: question1.1
-  questionText: choose abcd
+  questionText: 'The reaction between hydrogen and oxygen to form water is described
+    as follows:
+
+    Hydrogen+Oxygen --> Water
+
+    The reactants are: '
   answers:
-  - AA
-  - BB
-  - CC
-  - DD
-  correctIndex: 3
-  explanation: 
+  - 'Hydrogen, water  '
+  - 'Hydrogen, oxygen '
+  - Oxygen, water
+  - Water
+  correctIndex: 1
+  explanation: 'The initial substances that are transformed in a reaction are called
+    reactants. Therefore, hydrogen and oxygen are the reactants.
+
+'

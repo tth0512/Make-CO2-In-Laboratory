@@ -13,11 +13,14 @@ MonoBehaviour:
   m_Name: Q_3_2
   m_EditorClassIdentifier: Assembly-CSharp::Question
   questionID: question3.2
-  questionText: choose abcd
+  questionText: 'Physiological saline (0.9% NaCl solution) is widely used in medicine
+    and daily life for rinsing the mouth or washing vegetables. To prepare 500g of
+    physiological saline, you need:'
   answers:
-  - AA
-  - BB
-  - CC
-  - DD
-  correctIndex: 3
-  explanation: 
+  - 4.5g NaCl and 495.5g water.
+  - 5.4g NaCl and 494.6g water.
+  - 4.5g NaCl and 504.5g water.
+  - 5.4g NaCl and 505.4g water.
+  correctIndex: 0
+  explanation: "m_solute (NaCl)\u200B=500\xD70.9/100\u200B=4.5 (grams)\nm_water\u200B=m_solution\u200B\u2212m_solute\u200B=500\u22124.5=495.5
+    (grams)\n"

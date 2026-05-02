@@ -13,11 +13,14 @@ MonoBehaviour:
   m_Name: Q_3_1
   m_EditorClassIdentifier: Assembly-CSharp::Question
   questionID: question3.1
-  questionText: 3.1
+  questionText: 'Adding table salt to water and stirring thoroughly results in a:'
   answers:
-  - B
-  - D
-  - A
-  - E
-  correctIndex: 2
-  explanation: DONT ASK WHY
+  - 'Suspension. '
+  - Solution.
+  - Emulsion.
+  - Solvent.
+  correctIndex: 1
+  explanation: 'A solution is a homogeneous mixture of a solute and a solvent. Stirring
+    salt into water creates a solution.
+
+'
