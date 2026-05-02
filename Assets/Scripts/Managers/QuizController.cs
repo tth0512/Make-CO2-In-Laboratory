@@ -6,10 +6,11 @@ using System;
 public class QuizController : MonoBehaviour
 {
     public event Action QuizFinished;
+    public event Action<QuizResult> LessonCompleted;
 
     [SerializeField] private QuizBoardUI quizBoardUI;
 
-    [SerializeField] private float nextQuestionDelay = 0.75f;
+    [SerializeField] private float nextQuestionDelay = 1f;
 
     private readonly QuizModel model = new QuizModel();
     private readonly List<int> answerIndexMap = new List<int>();
@@ -41,11 +42,18 @@ public class QuizController : MonoBehaviour
         ShowCurrentQuestion();
     }
 
+    public void ShowCompletionSummary(string message)
+    {
+        if (quizBoardUI == null) return;
+        quizBoardUI.ShowCompleted(message);
+    }
+
     private void ShowCurrentQuestion()
     {
         if (model.IsCompleted)
         {
             quizBoardUI.ShowCompleted("Hoàn thành bài học!");
+            LessonCompleted?.Invoke(new QuizResult(model.CorrectCount, model.TotalQuestions));
             QuizFinished?.Invoke();
             return;
         }
@@ -96,11 +104,24 @@ public class QuizController : MonoBehaviour
         int selectedIndex = answerIndexMap[displayIndex];
         QuestionData question = model.CurrentQuestion;
         bool isCorrect = selectedIndex == question.correctIndex;
+        model.RegisterAnswer(isCorrect);
 
         quizBoardUI.SetExplainationText((isCorrect ? "Right!\n" : "Wrong!\n") + question.explanation);
 
         waitingForNextQuestion = true;
         nextQuestionCoroutine = StartCoroutine(LoadNextQuestionAfterDelay());
+    }
+
+    public readonly struct QuizResult
+    {
+        public int CorrectCount { get; }
+        public int TotalQuestions { get; }
+
+        public QuizResult(int correctCount, int totalQuestions)
+        {
+            CorrectCount = correctCount;
+            TotalQuestions = totalQuestions;
+        }
     }
 
     private IEnumerator LoadNextQuestionAfterDelay()

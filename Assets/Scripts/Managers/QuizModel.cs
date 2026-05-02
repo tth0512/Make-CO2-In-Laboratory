@@ -4,9 +4,12 @@ public class QuizModel
 {
     private List<QuestionData> questions = new List<QuestionData>();
     private int currentIndex;
+    private int correctCount;
 
     public bool HasQuestions => questions != null && questions.Count > 0;
     public bool IsCompleted => !HasQuestions || currentIndex >= questions.Count;
+    public int CorrectCount => correctCount;
+    public int TotalQuestions => questions?.Count ?? 0;
 
     public QuestionData CurrentQuestion
     {
@@ -21,6 +24,13 @@ public class QuizModel
     {
         questions = source ?? new List<QuestionData>();
         currentIndex = 0;
+        correctCount = 0;
+    }
+
+    public void RegisterAnswer(bool isCorrect)
+    {
+        if (isCorrect)
+            correctCount++;
     }
 
     public void MoveNext()

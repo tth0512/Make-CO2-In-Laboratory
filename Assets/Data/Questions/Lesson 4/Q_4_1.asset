@@ -9,17 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4da322fee81a473299d99dc0e4125745, type: 3}
+  m_Script: {fileID: 11500000, guid: bf49d84cf156cd94b8dcda3db3afe5be, type: 3}
   m_Name: Q_4_1
   m_EditorClassIdentifier: Assembly-CSharp::Question
-  questionText: 'Adding table salt to water and stirring thoroughly results in a:'
+  questionID: question4.1
+  questionText: choose abcd
   answers:
-  - Suspension.
-  - 'Solution. '
-  - 'Emulsion. '
-  - 'Solvent. '
-  correctIndex: 1
-  explanation: 'A solution is a homogeneous mixture of a solute and a solvent. Stirring
-    salt into water creates a solution.
-
-'
+  - AA
+  - BB
+  - CC
+  - DD
+  correctIndex: 3
+  explanation: 

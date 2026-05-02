@@ -1,5 +1,7 @@
 using UnityEngine;
 using Cinemachine;
+using System.Collections.Generic;
+using System.Collections;
 [DefaultExecutionOrder(0)]
 
 public class ChalkboardManager : MonoBehaviour, IInteractable
@@ -9,7 +11,13 @@ public class ChalkboardManager : MonoBehaviour, IInteractable
     public GameObject playerController;            // Kéo script Player vào đây
     public GameObject quizCanvas;                  // UI Canvas chứa câu hỏi
     public QuizController quizController;
-    public string lessonKey = "Lesson 2";
+
+    [Header("Lessons")]
+    public bool loopLessons;
+    [SerializeField] private float nextLessonDelay = 3f;
+    private List<string> lessons = new List<string>();
+    private int currentLessonIndex;
+    private bool pendingNextLesson;
 
     private PlayerManager playerManager;
     // Cỗ máy StateMachine siêu mượt của chúng ta
@@ -21,6 +29,8 @@ public class ChalkboardManager : MonoBehaviour, IInteractable
         playerManager = PlayerManager.Instance;
         stateMachine = new StateMachine<BaseChalkboardState>();
 
+        RefreshLessonsFromAssets();
+
         // Nạp các State
         stateMachine.AddState(new ChalkboardInactiveState(this));
         stateMachine.AddState(new ChalkboardQuestionState(this));
@@ -29,6 +39,7 @@ public class ChalkboardManager : MonoBehaviour, IInteractable
         if (quizController != null)
         {
             quizController.QuizFinished += HandleQuizFinished;
+            quizController.LessonCompleted += HandleLessonCompleted;
         }
     }
 
@@ -64,6 +75,21 @@ public class ChalkboardManager : MonoBehaviour, IInteractable
 
     public void EnterQuestionMode()
     {
+        if (lessons == null || lessons.Count == 0)
+        {
+            RefreshLessonsFromAssets();
+        }
+
+        if (lessons == null || lessons.Count == 0)
+        {
+            if (quizCanvas != null)
+                quizCanvas.SetActive(true);
+            if (quizController != null)
+                quizController.Load(string.Empty);
+            return;
+        }
+
+        string lessonKey = lessons[Mathf.Clamp(currentLessonIndex, 0, lessons.Count - 1)];
         if (quizCanvas != null)
         {
             quizCanvas.SetActive(true);
@@ -97,7 +123,8 @@ public class ChalkboardManager : MonoBehaviour, IInteractable
             chalkboardCam.Priority = 0;
         }
 
-        playerManager.EnablePlayer();
+        if (playerManager != null)
+            playerManager.EnablePlayer();
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -108,8 +135,88 @@ public class ChalkboardManager : MonoBehaviour, IInteractable
     {
         if (stateMachine.CurrentState is ChalkboardQuestionState)
         {
+            if (pendingNextLesson)
+                return;
+
             stateMachine.ChangeState<ChalkboardInactiveState>();
         }
+    }
+
+    private void HandleLessonCompleted(QuizController.QuizResult result)
+    {
+        string lessonName = GetCurrentLessonName();
+        if (quizController != null)
+        {
+            quizController.ShowCompletionSummary($"Hoàn thành {lessonName}!\nKết quả: {result.CorrectCount}/{result.TotalQuestions}");
+        }
+
+        bool hasNextLesson = HasNextLesson();
+        AdvanceLesson();
+
+        if (hasNextLesson)
+        {
+            pendingNextLesson = true;
+            StartCoroutine(LoadNextLessonAfterDelay());
+        }
+    }
+
+    private IEnumerator LoadNextLessonAfterDelay()
+    {
+        yield return new WaitForSeconds(nextLessonDelay);
+        pendingNextLesson = false;
+
+        if (stateMachine.CurrentState is ChalkboardQuestionState && quizController != null)
+        {
+            quizController.Load(GetCurrentLessonKey());
+        }
+    }
+
+    private void AdvanceLesson()
+    {
+        if (lessons == null || lessons.Count == 0)
+            return;
+
+        currentLessonIndex++;
+        if (currentLessonIndex >= lessons.Count)
+        {
+            currentLessonIndex = loopLessons ? 0 : lessons.Count - 1;
+        }
+    }
+
+    private string GetCurrentLessonName()
+    {
+        if (lessons == null || lessons.Count == 0)
+            return "bài học";
+
+        return lessons[Mathf.Clamp(currentLessonIndex, 0, lessons.Count - 1)];
+    }
+
+    private string GetCurrentLessonKey()
+    {
+        if (lessons == null || lessons.Count == 0)
+            return string.Empty;
+
+        return lessons[Mathf.Clamp(currentLessonIndex, 0, lessons.Count - 1)];
+    }
+
+    private bool HasNextLesson()
+    {
+        if (lessons == null || lessons.Count == 0)
+            return false;
+
+        return loopLessons || currentLessonIndex < lessons.Count - 1;
+    }
+
+    private void RefreshLessonsFromAssets()
+    {
+        lessons.Clear();
+        if (AssetManager.Ins == null)
+            return;
+
+        List<string> detectedLessons = AssetManager.Ins.GetLessonKeys();
+        detectedLessons.Sort();
+        lessons.AddRange(detectedLessons);
+        currentLessonIndex = Mathf.Clamp(currentLessonIndex, 0, Mathf.Max(0, lessons.Count - 1));
     }
 
     private void OnDestroy()
@@ -117,6 +224,7 @@ public class ChalkboardManager : MonoBehaviour, IInteractable
         if (quizController != null)
         {
             quizController.QuizFinished -= HandleQuizFinished;
+            quizController.LessonCompleted -= HandleLessonCompleted;
         }
     }
 
