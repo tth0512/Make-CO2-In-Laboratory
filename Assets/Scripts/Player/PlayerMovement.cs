@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CharacterController))]
-public class PlayerController : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
@@ -16,9 +16,11 @@ public class PlayerController : MonoBehaviour
     public float groundDistance = 0.4f; // Bán kính kiểm tra
     public LayerMask groundMask;    // Layer của mặt đất
 
-    [Header("Camera Settings")]
-    public Camera playerCamera;
-    public float mouseSensitivity = 20f;
+    [Header("Camera Look (Cinemachine)")]
+    public Transform cameraRoot;    // Điểm nhìn (object con của Player)
+    public float lookSensitivity = 20f;
+    public float minPitch = -85f;
+    public float maxPitch = 85f;
 
     private CharacterController controller;
     private Vector2 moveInput;
@@ -86,14 +88,18 @@ public class PlayerController : MonoBehaviour
 
     void LookAround()
     {
-        float mouseX = lookInput.x * mouseSensitivity * Time.deltaTime;
-        float mouseY = lookInput.y * mouseSensitivity * Time.deltaTime;
+        float mouseX = lookInput.x * lookSensitivity * Time.deltaTime;
+        float mouseY = lookInput.y * lookSensitivity * Time.deltaTime;
+
+        transform.Rotate(Vector3.up * mouseX);
 
         xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+        xRotation = Mathf.Clamp(xRotation, minPitch, maxPitch);
 
-        playerCamera.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-        transform.Rotate(Vector3.up * mouseX);
+        if (cameraRoot != null)
+        {
+            cameraRoot.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+        }
     }
 
     void MovePlayer()

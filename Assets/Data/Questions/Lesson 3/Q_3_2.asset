@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf49d84cf156cd94b8dcda3db3afe5be, type: 3}
+  m_Name: Q_3_2
+  m_EditorClassIdentifier: Assembly-CSharp::Question
+  questionID: question3.2
+  questionText: 'Physiological saline (0.9% NaCl solution) is widely used in medicine
+    and daily life for rinsing the mouth or washing vegetables. To prepare 500g of
+    physiological saline, you need:'
+  answers:
+  - 4.5g NaCl and 495.5g water.
+  - 5.4g NaCl and 494.6g water.
+  - 4.5g NaCl and 504.5g water.
+  - 5.4g NaCl and 505.4g water.
+  correctIndex: 0
+  explanation: "m_solute (NaCl)\u200B=500\xD70.9/100\u200B=4.5 (grams)\nm_water\u200B=m_solution\u200B\u2212m_solute\u200B=500\u22124.5=495.5
+    (grams)\n"

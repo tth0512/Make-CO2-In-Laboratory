@@ -71,6 +71,20 @@ public class AssetManager : MonoBehaviour
         return result;
     }
 
+    public List<string> GetLessonKeys()
+    {
+        HashSet<string> lessons = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        foreach (var key in questionsByKey.Keys)
+        {
+            if (string.IsNullOrWhiteSpace(key)) continue;
+            int slashIndex = key.IndexOf('/');
+            if (slashIndex <= 0) continue;
+            lessons.Add(key.Substring(0, slashIndex));
+        }
+
+        return new List<string>(lessons);
+    }
+
 #if UNITY_EDITOR
     [ContextMenu("Refresh Question Cache From Folder")]
     private void RefreshQuestionCacheFromFolder()

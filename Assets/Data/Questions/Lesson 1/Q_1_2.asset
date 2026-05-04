@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf49d84cf156cd94b8dcda3db3afe5be, type: 3}
+  m_Name: Q_1_2
+  m_EditorClassIdentifier: Assembly-CSharp::Question
+  questionID: question1.2
+  questionText: 'Which of the following signs indicate that a chemical reaction has
+    occurred?
+
+'
+  answers:
+  - Change in color.
+  - 'Release of heat and light. '
+  - 'Appearance of a gas or a precipitate. '
+  - All of the above.
+  correctIndex: 3
+  explanation: 'Recognizable signs of new substances forming include color changes,
+    the appearance of gas bubbles, or the formation of a precipitate.
+
+    Heat release
+    and light emission are also common indicators of a chemical reaction.
+
+'
