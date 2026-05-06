@@ -1,0 +1,15 @@
+using UnityEngine;
+
+public abstract class BaseExperimentState : IExperimentState
+{
+    protected ExperimentReactionManager context;
+
+    protected BaseExperimentState(ExperimentReactionManager context)
+    {
+        this.context = context;
+    }
+
+    public abstract void EnterState();
+    public abstract void UpdateState();
+    public abstract void ExitState();
+}

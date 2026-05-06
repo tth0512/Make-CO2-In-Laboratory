@@ -12,6 +12,9 @@ public class InteractionManager : MonoBehaviour
         }
     }
     private GameObject hoveredObject;
+    private Outline hoveredOutline;
+    private Camera mainCamera;
+    [SerializeField] private LayerMask raycastMask = ~0;
     public GameObject GetHoveredObject() => hoveredObject;
     private void Awake()
     {
@@ -23,53 +26,55 @@ public class InteractionManager : MonoBehaviour
         {
             _instance = this;
         }
+
+        mainCamera = Camera.main;
     }
 
     private void Update()
     {
-        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+        if (mainCamera == null)
+        {
+            mainCamera = Camera.main;
+            if (mainCamera == null) return;
+        }
+
+        Ray ray = mainCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, raycastMask, QueryTriggerInteraction.Ignore))
         {
             GameObject objectHitByRaycast = hit.transform.gameObject;
 
             if (objectHitByRaycast != null)
             {
-                //Debug.Log("Detected object: " + objectHitByRaycast.name);
-                if (objectHitByRaycast.CompareTag("Interactable") || objectHitByRaycast.CompareTag("showcase"))
-                {
-                    if (hoveredObject && objectHitByRaycast != hoveredObject)
-                    {
-                        hoveredObject.GetComponent<Outline>().enabled = false;
-                    }
+                bool isHoverable = objectHitByRaycast.CompareTag("Interactable")
+                    || objectHitByRaycast.CompareTag("showcase")
+                    || objectHitByRaycast.CompareTag("Cabinet");
 
-                    objectHitByRaycast.GetComponent<Outline>().enabled = true;
-                    hoveredObject = objectHitByRaycast;
-                }
-                else if (objectHitByRaycast.CompareTag("Cabinet"))
+                if (isHoverable && objectHitByRaycast != hoveredObject)
                 {
-                    if (hoveredObject && objectHitByRaycast != hoveredObject)
-                    {
-                        hoveredObject.GetComponent<Outline>().enabled = false;
-                    }
+                    if (hoveredOutline != null)
+                        hoveredOutline.enabled = false;
 
-                    objectHitByRaycast.GetComponent<Outline>().enabled = true;
                     hoveredObject = objectHitByRaycast;
+                    hoveredOutline = hoveredObject.GetComponent<Outline>();
+                    if (hoveredOutline != null)
+                        hoveredOutline.enabled = true;
                 }
-                else
+                else if (!isHoverable && hoveredOutline != null)
                 {
-                    if (hoveredObject)
-                    {
-                        hoveredObject.GetComponent<Outline>().enabled = false;
-                        hoveredObject = null;
-                    }
+                    hoveredOutline.enabled = false;
+                    hoveredObject = null;
+                    hoveredOutline = null;
                 }
             }
         }
         else
         {
+            if (hoveredOutline != null)
+                hoveredOutline.enabled = false;
             hoveredObject = null;
+            hoveredOutline = null;
         }
     }
 }
