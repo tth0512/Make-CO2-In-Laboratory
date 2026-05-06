@@ -24,6 +24,14 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (cameraTransform != null)
+        {
+            Vector3 forward = cameraTransform.forward;
+            forward.y = 0f;
+            if (forward.sqrMagnitude > 0.001f)
+                transform.rotation = Quaternion.LookRotation(forward);
+        }
+
         groundedPlayer = controller.isGrounded;
 
         if (groundedPlayer)
