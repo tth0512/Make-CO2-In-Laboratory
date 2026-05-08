@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4166394402178279729}
   - component: {fileID: 2177198961374518779}
   - component: {fileID: -3737706747278795271}
-  - component: {fileID: 880358058671172230}
+  - component: {fileID: -7518274319658930451}
   m_Layer: 0
   m_Name: Beaker
   m_TagString: Interactable
@@ -1074,33 +1074,25 @@ MonoBehaviour:
     - {x: 0.0001490456, y: 0.9999994, z: 0.001100232}
     - {x: -0.024341296, y: 0.84002334, z: 0.5420039}
     - {x: -0.000049811217, y: 0.9999994, z: 0.0011091455}
---- !u!114 &880358058671172230
-MonoBehaviour:
+--- !u!64 &-7518274319658930451
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 375499282934692910}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0921f9e6d5955b04e8be53a1c3f70933, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: NewAssembly::CoACD
-  target: {fileID: 4166394402178279729}
-  isTrigger: 0
-  hideColliders: 1
-  physicMaterial: {fileID: 0}
-  parameters:
-    threshold: 0.05
-    preprocessMode: 0
-    preprocessResolution: 50
-    sampleResolution: 2000
-    mctsNodes: 20
-    mctsIteration: 150
-    mctsMaxDepth: 3
-    pca: 0
-    merge: 1
-    maxConvexHull: 3
-    seed: 0
-  _colliderData: {fileID: 11400000, guid: 0cbe1e7817bd229488cc9ec977aeabca, type: 2}
-  _colliders: []
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4370586879743159886, guid: 44fed6aff454809469effaac1a0b86ed, type: 3}

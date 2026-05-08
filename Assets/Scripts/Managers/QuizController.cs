@@ -7,6 +7,7 @@ public class QuizController : MonoBehaviour
 {
     public event Action QuizFinished;
     public event Action<QuizResult> LessonCompleted;
+    public event Action<bool> AnswerEvaluated;
 
     [SerializeField] private QuizBoardUI quizBoardUI;
 
@@ -105,6 +106,7 @@ public class QuizController : MonoBehaviour
         QuestionData question = model.CurrentQuestion;
         bool isCorrect = selectedIndex == question.correctIndex;
         model.RegisterAnswer(isCorrect);
+        AnswerEvaluated?.Invoke(isCorrect);
 
         quizBoardUI.SetExplainationText((isCorrect ? "Right!\n" : "Wrong!\n") + question.explanation);
 

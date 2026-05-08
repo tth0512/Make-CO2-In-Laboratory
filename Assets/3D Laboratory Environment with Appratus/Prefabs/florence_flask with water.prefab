@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 1473023423727197289}
   - component: {fileID: 3717103249955104931}
   - component: {fileID: 4488329478732059338}
-  - component: {fileID: -5927302854940869972}
   - component: {fileID: 2408291052157207508}
+  - component: {fileID: 38932107521785576}
   m_Layer: 0
   m_Name: florence_flask with water
   m_TagString: Interactable
@@ -2188,36 +2188,6 @@ MonoBehaviour:
     - {x: -0.21852194, y: 0.7070911, z: 0.6725105}
     - {x: 0.21851967, y: 0.70709133, z: 0.6725109}
     - {x: -0.0000011847378, y: 0.447179, z: 0.8944445}
---- !u!114 &-5927302854940869972
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2924298259548178806}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0921f9e6d5955b04e8be53a1c3f70933, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: NewAssembly::CoACD
-  target: {fileID: 1473023423727197289}
-  isTrigger: 0
-  hideColliders: 1
-  physicMaterial: {fileID: 0}
-  parameters:
-    threshold: 0.05
-    preprocessMode: 0
-    preprocessResolution: 50
-    sampleResolution: 2000
-    mctsNodes: 20
-    mctsIteration: 150
-    mctsMaxDepth: 3
-    pca: 0
-    merge: 1
-    maxConvexHull: 3
-    seed: 0
-  _colliderData: {fileID: 11400000, guid: 2f97db6638f71704cb68a0cb798f1d56, type: 2}
-  _colliders: []
 --- !u!54 &2408291052157207508
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2245,6 +2215,28 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!64 &38932107521785576
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2924298259548178806}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -6725155381145740070, guid: fb0b01455e191c24b87848c181088517, type: 3}
 --- !u!1001 &487123030047265198
 PrefabInstance:
   m_ObjectHideFlags: 0

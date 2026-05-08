@@ -13,6 +13,7 @@ public class InteractionManager : MonoBehaviour
     }
     private GameObject hoveredObject;
     private Outline hoveredOutline;
+    private GameObject hoverSoundObject;
     private Camera mainCamera;
     [SerializeField] private LayerMask raycastMask = ~0;
     public GameObject GetHoveredObject() => hoveredObject;
@@ -60,12 +61,18 @@ public class InteractionManager : MonoBehaviour
                     hoveredOutline = hoveredObject.GetComponent<Outline>();
                     if (hoveredOutline != null)
                         hoveredOutline.enabled = true;
+                    if (AudioManager.Ins != null && hoverSoundObject != hoveredObject)
+                    {
+                        AudioManager.Ins.PlayBubbleHoverSound();
+                        hoverSoundObject = hoveredObject;
+                    }
                 }
                 else if (!isHoverable && hoveredOutline != null)
                 {
                     hoveredOutline.enabled = false;
                     hoveredObject = null;
                     hoveredOutline = null;
+                    hoverSoundObject = null;
                 }
             }
         }
@@ -75,6 +82,7 @@ public class InteractionManager : MonoBehaviour
                 hoveredOutline.enabled = false;
             hoveredObject = null;
             hoveredOutline = null;
+            hoverSoundObject = null;
         }
     }
 }

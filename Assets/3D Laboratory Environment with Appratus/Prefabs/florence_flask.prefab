@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 7015381150545659183}
   - component: {fileID: -4276042173653989315}
   - component: {fileID: 5452398252543310942}
-  - component: {fileID: -4600352014888836332}
   - component: {fileID: -1340535877564612992}
   m_Layer: 0
   m_Name: florence_flask
@@ -1328,36 +1327,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -6725155381145740070, guid: fb0b01455e191c24b87848c181088517, type: 3}
---- !u!114 &-4600352014888836332
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8816745754511107322}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0921f9e6d5955b04e8be53a1c3f70933, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: NewAssembly::CoACD
-  target: {fileID: 5097886440246620645}
-  isTrigger: 0
-  hideColliders: 1
-  physicMaterial: {fileID: 0}
-  parameters:
-    threshold: 0.05
-    preprocessMode: 0
-    preprocessResolution: 50
-    sampleResolution: 2000
-    mctsNodes: 20
-    mctsIteration: 150
-    mctsMaxDepth: 3
-    pca: 0
-    merge: 1
-    maxConvexHull: 3
-    seed: 0
-  _colliderData: {fileID: 11400000, guid: 6bf263f48f94ab64b9e5002a806d47e2, type: 2}
-  _colliders: []
 --- !u!54 &-1340535877564612992
 Rigidbody:
   m_ObjectHideFlags: 0

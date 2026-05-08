@@ -44,6 +44,8 @@ public class PlayerPickUp : MonoBehaviour
         if (TryGetInteractable(hoveredObject, out IInteractable interactable))
         {
             Debug.Log("Interacting with: " + hoveredObject.name);
+            if (AudioManager.Ins != null)
+                AudioManager.Ins.PlayBubbleInteractSound();
             interactable.Interact(this);
             return;
         }

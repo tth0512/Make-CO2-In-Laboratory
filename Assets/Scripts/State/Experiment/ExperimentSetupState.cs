@@ -4,7 +4,7 @@ public class ExperimentSetupState : BaseExperimentState
 
     public override void EnterState()
     {
-        context.EnterSetup();
+        context.ExitExperimentMode();
     }
 
     public override void UpdateState()

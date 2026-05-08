@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 4731077637416961423}
   - component: {fileID: 7371509968137662789}
   - component: {fileID: -1502913328441361467}
-  - component: {fileID: -7847262407328978771}
   - component: {fileID: 7482059054694919328}
+  - component: {fileID: 1586265042721723563}
   m_Layer: 0
   m_Name: Beaker water
   m_TagString: Interactable
@@ -1625,36 +1625,6 @@ MonoBehaviour:
     - {x: 0.0001490374, y: 0.9999994, z: 0.0011001662}
     - {x: -0.024341244, y: 0.84002775, z: 0.54199713}
     - {x: -0.000049810005, y: 0.9999994, z: 0.0011090796}
---- !u!114 &-7847262407328978771
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9028627854349766800}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0921f9e6d5955b04e8be53a1c3f70933, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: NewAssembly::CoACD
-  target: {fileID: 4731077637416961423}
-  isTrigger: 0
-  hideColliders: 1
-  physicMaterial: {fileID: 0}
-  parameters:
-    threshold: 0.05
-    preprocessMode: 0
-    preprocessResolution: 50
-    sampleResolution: 2000
-    mctsNodes: 20
-    mctsIteration: 150
-    mctsMaxDepth: 3
-    pca: 0
-    merge: 1
-    maxConvexHull: 2
-    seed: 0
-  _colliderData: {fileID: 11400000, guid: 9540102e5f2b07d4d89086449f9b3919, type: 2}
-  _colliders: []
 --- !u!54 &7482059054694919328
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1682,6 +1652,28 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!64 &1586265042721723563
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9028627854349766800}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4370586879743159886, guid: 44fed6aff454809469effaac1a0b86ed, type: 3}
 --- !u!1001 &4588832761785402624
 PrefabInstance:
   m_ObjectHideFlags: 0
