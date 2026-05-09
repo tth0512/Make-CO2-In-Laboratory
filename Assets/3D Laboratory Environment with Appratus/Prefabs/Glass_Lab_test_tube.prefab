@@ -11,10 +11,9 @@ GameObject:
   - component: {fileID: 4689210942802227850}
   - component: {fileID: 8555914702794194223}
   - component: {fileID: 5861505690287606245}
-  - component: {fileID: 1587378920533985434}
   - component: {fileID: -3563498561889981434}
-  - component: {fileID: -5954364861425982428}
   - component: {fileID: 4649740334027651968}
+  - component: {fileID: 2587320767347636843}
   m_Layer: 0
   m_Name: Glass_Lab_test_tube
   m_TagString: Glass
@@ -94,29 +93,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &1587378920533985434
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5357238664930371632}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.018288955
-  m_Height: 0.24406616
-  m_Direction: 1
-  m_Center: {x: -0.00000004004687, y: 0.121362604, z: 0}
 --- !u!114 &-3563498561889981434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -735,36 +711,6 @@ MonoBehaviour:
     - {x: -0.6366899, y: -0.61697185, z: 0.46257073}
     - {x: -0.41794962, y: -0.70312786, z: 0.5752646}
     - {x: -0.46257523, y: -0.6169754, z: 0.6366831}
---- !u!114 &-5954364861425982428
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5357238664930371632}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0921f9e6d5955b04e8be53a1c3f70933, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: NewAssembly::CoACD
-  target: {fileID: 8555914702794194223}
-  isTrigger: 0
-  hideColliders: 1
-  physicMaterial: {fileID: 0}
-  parameters:
-    threshold: 0.05
-    preprocessMode: 0
-    preprocessResolution: 50
-    sampleResolution: 2000
-    mctsNodes: 20
-    mctsIteration: 150
-    mctsMaxDepth: 3
-    pca: 0
-    merge: 1
-    maxConvexHull: 3
-    seed: 0
-  _colliderData: {fileID: 11400000, guid: 180f26a020e02fd4f99198163f2a5d5e, type: 2}
-  _colliders: []
 --- !u!54 &4649740334027651968
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -792,3 +738,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!64 &2587320767347636843
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5357238664930371632}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -1117496425915151621, guid: e4e11ea820df4144a80c5d1d3d605107, type: 3}

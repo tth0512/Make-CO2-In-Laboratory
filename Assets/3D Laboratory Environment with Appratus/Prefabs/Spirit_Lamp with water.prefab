@@ -191,7 +191,6 @@ GameObject:
   - component: {fileID: 2665425264791472026}
   - component: {fileID: 2692019539099865340}
   - component: {fileID: -4349239311687550575}
-  - component: {fileID: 6267650678330694549}
   m_Layer: 0
   m_Name: Spirit_Lamp with water
   m_TagString: Interactable
@@ -3243,36 +3242,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
---- !u!114 &6267650678330694549
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3438127250079161632}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0921f9e6d5955b04e8be53a1c3f70933, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: NewAssembly::CoACD
-  target: {fileID: 0}
-  isTrigger: 0
-  hideColliders: 1
-  physicMaterial: {fileID: 0}
-  parameters:
-    threshold: 0.05
-    preprocessMode: 0
-    preprocessResolution: 50
-    sampleResolution: 2000
-    mctsNodes: 20
-    mctsIteration: 150
-    mctsMaxDepth: 3
-    pca: 0
-    merge: 1
-    maxConvexHull: 3
-    seed: 0
-  _colliderData: {fileID: 0}
-  _colliders: []
 --- !u!1 &5506770061650608676
 GameObject:
   m_ObjectHideFlags: 0

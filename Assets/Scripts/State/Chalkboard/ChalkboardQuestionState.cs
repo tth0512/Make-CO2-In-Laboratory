@@ -8,6 +8,8 @@ public class ChalkboardQuestionState : BaseChalkboardState
     public override void EnterState()
     {
         context.EnterQuestionMode();
+        AudioManager.Ins.PauseBackgroundMusic();
+        AudioManager.Ins.PlayBackgroundMusic(0); // Phát nhạc nền khi vào trạng thái câu hỏi
     }
 
     public override void UpdateState()
@@ -21,6 +23,8 @@ public class ChalkboardQuestionState : BaseChalkboardState
     public override void ExitState()
     {
         // cleanup handled by manager when transitioning to inactive
+        AudioManager.Ins.PauseBackgroundMusic(); // Dừng nhạc nền khi rời khỏi trạng thái câu hỏi
+        AudioManager.Ins.PlayBackgroundMusic(1); // Quay lại nhạc nền chung khi rời khỏi trạng thái câu hỏi
     }
 
     // Ghi đè hàm xử lý click chuột từ lớp cha

@@ -40,6 +40,7 @@ public class ChalkboardManager : MonoBehaviour, IInteractable
         {
             quizController.QuizFinished += HandleQuizFinished;
             quizController.LessonCompleted += HandleLessonCompleted;
+            quizController.AnswerEvaluated += HandleAnswerEvaluated;
         }
     }
 
@@ -47,6 +48,20 @@ public class ChalkboardManager : MonoBehaviour, IInteractable
     {
         // Mặc định vào game, bảng ở trạng thái Ngủ đông
         stateMachine.Initialize<ChalkboardInactiveState>();
+    }
+
+    private void HandleAnswerEvaluated(bool isCorrect)
+    {
+        if (AudioManager.Ins == null) return;
+
+        if (isCorrect)
+        {
+            AudioManager.Ins.PlayCorrectSound();
+        }
+        else
+        {
+            AudioManager.Ins.PlayWrongSound();
+        }
     }
 
     void Update()
@@ -225,6 +240,7 @@ public class ChalkboardManager : MonoBehaviour, IInteractable
         {
             quizController.QuizFinished -= HandleQuizFinished;
             quizController.LessonCompleted -= HandleLessonCompleted;
+            quizController.AnswerEvaluated -= HandleAnswerEvaluated;
         }
     }
 

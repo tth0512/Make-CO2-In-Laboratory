@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 5283478468471072356}
   - component: {fileID: 7977661532143375022}
   - component: {fileID: -4325705285092003}
-  - component: {fileID: 7807730173340271766}
   - component: {fileID: -6463885910506184199}
   m_Layer: 0
   m_Name: Erlenmeyer_flask with water
@@ -1556,36 +1555,6 @@ MonoBehaviour:
     - {x: -0.17181574, y: 0.83117753, z: 0.52879417}
     - {x: 0.17181556, y: 0.8311774, z: 0.52879447}
     - {x: 0.00000007503123, y: 0.6902479, z: 0.7235729}
---- !u!114 &7807730173340271766
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8482147909517439867}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0921f9e6d5955b04e8be53a1c3f70933, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: NewAssembly::CoACD
-  target: {fileID: 5283478468471072356}
-  isTrigger: 0
-  hideColliders: 1
-  physicMaterial: {fileID: 0}
-  parameters:
-    threshold: 0.05
-    preprocessMode: 0
-    preprocessResolution: 50
-    sampleResolution: 2000
-    mctsNodes: 20
-    mctsIteration: 150
-    mctsMaxDepth: 3
-    pca: 0
-    merge: 1
-    maxConvexHull: 3
-    seed: 0
-  _colliderData: {fileID: 11400000, guid: e68a9375e8ab88b4d80c086761876480, type: 2}
-  _colliders: []
 --- !u!54 &-6463885910506184199
 Rigidbody:
   m_ObjectHideFlags: 0

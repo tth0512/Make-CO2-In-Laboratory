@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 614363062924564871}
   - component: {fileID: 2278967596899999511}
   - component: {fileID: -683508272994155206}
-  - component: {fileID: -4716550767681950441}
   m_Layer: 0
   m_Name: Graduated_Cylinder
   m_TagString: Interactable
@@ -886,33 +885,3 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 493549051170078461, guid: 1acc6957f1749f9449324468a75cad02, type: 3}
---- !u!114 &-4716550767681950441
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1406912553242785874}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0921f9e6d5955b04e8be53a1c3f70933, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: NewAssembly::CoACD
-  target: {fileID: 3414380229621034317}
-  isTrigger: 0
-  hideColliders: 1
-  physicMaterial: {fileID: 0}
-  parameters:
-    threshold: 0.05
-    preprocessMode: 0
-    preprocessResolution: 50
-    sampleResolution: 2000
-    mctsNodes: 20
-    mctsIteration: 150
-    mctsMaxDepth: 3
-    pca: 0
-    merge: 1
-    maxConvexHull: 3
-    seed: 0
-  _colliderData: {fileID: 11400000, guid: 14b4b85e9117bd94a9c01f1cfb72bcb1, type: 2}
-  _colliders: []

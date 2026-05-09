@@ -12,11 +12,8 @@ GameObject:
   - component: {fileID: 8956486773811076611}
   - component: {fileID: 6606536619861125833}
   - component: {fileID: -1861589104303720586}
-  - component: {fileID: -3220144501633145133}
-  - component: {fileID: 552123084738198604}
-  - component: {fileID: 2681538046537364881}
-  - component: {fileID: -2880786330754949007}
   - component: {fileID: 8826753280876341796}
+  - component: {fileID: 3476985245898064250}
   m_Layer: 0
   m_Name: Glass_Lab_test_tube with liquid
   m_TagString: Interactable
@@ -1071,105 +1068,6 @@ MonoBehaviour:
     - {x: 0.21850926, y: 0.7071026, z: 0.6725025}
     - {x: -0.21851079, y: 0.70710266, z: 0.672502}
     - {x: -0.00000012849499, y: 0.44720703, z: 0.89443046}
---- !u!114 &-3220144501633145133
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4661188770769472284}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0921f9e6d5955b04e8be53a1c3f70933, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: NewAssembly::CoACD
-  target: {fileID: 8956486773811076611}
-  isTrigger: 0
-  hideColliders: 1
-  physicMaterial: {fileID: 0}
-  parameters:
-    threshold: 0.05
-    preprocessMode: 0
-    preprocessResolution: 50
-    sampleResolution: 2000
-    mctsNodes: 20
-    mctsIteration: 150
-    mctsMaxDepth: 3
-    pca: 0
-    merge: 1
-    maxConvexHull: 3
-    seed: 0
-  _colliderData: {fileID: 11400000, guid: 2e7d9afa98f9eff409bdab81de57dcd3, type: 2}
-  _colliders:
-  - {fileID: 552123084738198604}
-  - {fileID: 2681538046537364881}
-  - {fileID: -2880786330754949007}
---- !u!64 &552123084738198604
-MeshCollider:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4661188770769472284}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 1482615221235872315, guid: 2e7d9afa98f9eff409bdab81de57dcd3, type: 2}
---- !u!64 &2681538046537364881
-MeshCollider:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4661188770769472284}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -6445756842663053131, guid: 2e7d9afa98f9eff409bdab81de57dcd3, type: 2}
---- !u!64 &-2880786330754949007
-MeshCollider:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4661188770769472284}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -2137389656211086233, guid: 2e7d9afa98f9eff409bdab81de57dcd3, type: 2}
 --- !u!54 &8826753280876341796
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1197,6 +1095,28 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!64 &3476985245898064250
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4661188770769472284}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -1117496425915151621, guid: e4e11ea820df4144a80c5d1d3d605107, type: 3}
 --- !u!1001 &8922982349968720257
 PrefabInstance:
   m_ObjectHideFlags: 0
