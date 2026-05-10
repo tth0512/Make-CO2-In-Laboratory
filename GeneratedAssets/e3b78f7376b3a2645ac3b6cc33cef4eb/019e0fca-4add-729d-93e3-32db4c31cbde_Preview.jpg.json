@@ -1,0 +1,12 @@
+{
+    "asset": "e3b78f7376b3a2645ac3b6cc33cef4eb",
+    "fileName": "019e0fca-4add-729d-93e3-32db4c31cbde_Preview.jpg",
+    "prompt": "highly detailed realistic clear water surface texture, tileable, top down view, ripple patterns, crystal clear, photorealistic",
+    "negativePrompt": "",
+    "model": "realistic-textures-3-0",
+    "modelName": "Realistic Textures 3.0",
+    "customSeed": 1596780362,
+    "w3CTraceId": "",
+    "feedback": 0,
+    "refinementMode": "Generation"
+}
