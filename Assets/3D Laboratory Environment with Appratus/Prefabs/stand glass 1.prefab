@@ -59,7 +59,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: c46ea31fd4e9353429ec414ebc1dbceb, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 62dad06c47d1d1a448901a67f077f0b6, type: 2}
+      objectReference: {fileID: 2100000, guid: 6e1e7f2a3b8592b45b774c060ec9cc83, type: 2}
     - target: {fileID: 919132149155446097, guid: c46ea31fd4e9353429ec414ebc1dbceb, type: 3}
       propertyPath: m_Name
       value: stand glass 1
