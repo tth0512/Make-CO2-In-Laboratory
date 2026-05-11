@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 31dfe518db67f1d4284b29eca3e34165
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 182987
+  packageName: Channel Packer Pro
+  packageVersion: 1.5.3
+  assetPath: Assets/DarkMoorGames/ChannelPackerPro/Editor/Postprocessors/PaddingPostprocessor.cs
+  uploadId: 480178

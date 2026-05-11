@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 2e8e5a5858d03bd45a4e7cc32666de49
+ComputeShaderImporter:
+  externalObjects: {}
+  currentAPIMask: 2052
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 182987
+  packageName: Channel Packer Pro
+  packageVersion: 1.5.3
+  assetPath: Assets/DarkMoorGames/ChannelPackerPro/Editor/Shaders/Generators/Border.compute
+  uploadId: 480178

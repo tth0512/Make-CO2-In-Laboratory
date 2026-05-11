@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 2907cf305375d884cbf8dfe7dce202bb
+ComputeShaderImporter:
+  externalObjects: {}
+  currentAPIMask: 2052
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 182987
+  packageName: Channel Packer Pro
+  packageVersion: 1.5.3
+  assetPath: Assets/DarkMoorGames/ChannelPackerPro/Editor/Shaders/Postprocessors/BrightnessContrast.compute
+  uploadId: 480178

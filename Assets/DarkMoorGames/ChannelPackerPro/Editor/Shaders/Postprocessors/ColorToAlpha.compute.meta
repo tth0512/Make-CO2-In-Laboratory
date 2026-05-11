@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 20454e7e797f5394fa1ca3dd2a97297b
+ComputeShaderImporter:
+  externalObjects: {}
+  currentAPIMask: 2052
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 182987
+  packageName: Channel Packer Pro
+  packageVersion: 1.5.3
+  assetPath: Assets/DarkMoorGames/ChannelPackerPro/Editor/Shaders/Postprocessors/ColorToAlpha.compute
+  uploadId: 480178

@@ -1,0 +1,76 @@
+﻿#pragma kernel VoronoiEuclidien
+#pragma kernel VoronoiManhattan
+
+uint ImageWidth;
+uint ImageHeight;
+RWTexture2D<float4> Output;
+
+float Scale;
+float OffsetX;
+float OffsetY;
+
+float2 N22(float2 p)
+{
+	float3 a = frac(p.xyx * float3(123.34, 234.34, 345.65));
+	a += dot(a, a + 34.45);
+	return frac(float2(a.x * a.y, a.y * a.z));
+}
+
+[numthreads(8,8,1)]
+void VoronoiEuclidien(uint3 id : SV_DispatchThreadID)
+{
+	float2 uv = float2((id.x + 0.5) / ImageWidth, (id.y + 0.5) / ImageHeight);
+
+	float2 uvOffset = (((uv - 0.5) * Scale) + float2(OffsetX, OffsetY));
+
+	float2 gridUv = frac(uvOffset);
+	float2 gridID = floor(uvOffset);
+	float minDist = 10000.0;
+
+	for (float y = -1.0; y <= 1.0; y++)
+	{
+		for (float x = -1.0; x <= 1.0; x++)
+		{
+			float2 offset = float2(x, y);
+
+			float2 n = N22(gridID + offset);
+			float2 p = offset + sin(n * 3.5) * 0.5;
+			float d = distance(gridUv, p);
+			if (d < minDist)
+			{
+				minDist = d;
+			}
+		}
+	}
+	Output[id.xy] = float4(minDist, minDist, minDist, 1.0);
+}
+[numthreads(8, 8, 1)]
+void VoronoiManhattan(uint3 id : SV_DispatchThreadID)
+{
+	float2 uv = float2((id.x + 0.5) / ImageWidth, (id.y + 0.5) / ImageHeight);
+
+	float2 uvOffset = (((uv - 0.5) * Scale) + float2(OffsetX, OffsetY));
+
+	float2 gridUv = frac(uvOffset);
+	float2 gridID = floor(uvOffset);
+	float minDist = 10000.0;
+
+	for (float y = -1.0; y <= 1.0; y++)
+	{
+		for (float x = -1.0; x <= 1.0; x++)
+		{
+			float2 offset = float2(x, y);
+
+			float2 n = N22(gridID + offset);
+			float2 p = offset + sin(n * 3.5) * 0.5;
+			p -= gridUv;
+			float d = abs(p.x) + abs(p.y);
+
+			if (d < minDist)
+			{
+				minDist = d;
+			}
+		}
+	}
+	Output[id.xy] = float4(minDist, minDist, minDist, 1.0);
+}

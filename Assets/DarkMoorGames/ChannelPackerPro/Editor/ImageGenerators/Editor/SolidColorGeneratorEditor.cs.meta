@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 69e1d72e5b2ea9548b01da07c9fa72d6
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 182987
+  packageName: Channel Packer Pro
+  packageVersion: 1.5.3
+  assetPath: Assets/DarkMoorGames/ChannelPackerPro/Editor/ImageGenerators/Editor/SolidColorGeneratorEditor.cs
+  uploadId: 480178

@@ -1,0 +1,59 @@
+﻿#pragma kernel HSV
+
+uint ImageWidth;
+uint ImageHeight;
+Texture2D<float4> Original;
+RWTexture2D<float4> Output;
+
+float Hue;
+float Saturation;
+float Value;
+
+#if !defined(EPSILON)
+#define EPSILON 1e-10
+#endif
+
+float3 HUEtoRGB(float hue)
+{
+	// Hue [0..1] to RGB [0..1]
+	// See http://www.chilliant.com/rgb2hsv.html
+	float3 rgb = abs(hue * 6.0 - float3(3.0, 2.0, 4.0)) * float3(1.0, -1.0, -1.0) + float3(-1.0, 2.0, 2.0);
+	return saturate(rgb);
+}
+float3 HSVtoRGB(float3 hsv)
+{
+	// Hue-Saturation-Value [0..1] to RGB [0..1]
+	float3 rgb = HUEtoRGB(hsv.x);
+	return ((rgb - 1.0) * hsv.y + 1.0) * hsv.z;
+}
+float3 RGBtoHCV(float3 rgb)
+{
+	// RGB [0..1] to Hue-Chroma-Value [0..1]
+	// Based on work by Sam Hocevar and Emil Persson
+	float4 p = (rgb.g < rgb.b) ? float4(rgb.bg, -1.0, 2.0 / 3.0) : float4(rgb.gb, 0.0, -1.0 / 3.0);
+	float4 q = (rgb.r < p.x) ? float4(p.xyw, rgb.r) : float4(rgb.r, p.yzx);
+	float c = q.x - min(q.w, q.y);
+	float h = abs((q.w - q.y) / (6.0 * c + EPSILON) + q.z);
+	return float3(h, c, q.x);
+}
+float3 RGBtoHSV(float3 rgb)
+{
+	// RGB [0..1] to Hue-Saturation-Value [0..1]
+	float3 hcv = RGBtoHCV(rgb);
+	float s = hcv.y / (hcv.z + EPSILON);
+	return float3(hcv.x, s, hcv.z);
+}
+
+[numthreads(8,8,1)]
+void HSV(uint3 id : SV_DispatchThreadID)
+{
+	float4 output = Original[id.xy];
+
+	float3 hsv = RGBtoHSV(output.rgb);
+	hsv.x = (hsv.x + Hue) % 1.0;
+	hsv.y = saturate(hsv.y + Saturation);
+	hsv.z = saturate(hsv.z + Value);
+
+	float3 rgb = HSVtoRGB(hsv);
+	Output[id.xy] = float4(rgb, output.a);
+}

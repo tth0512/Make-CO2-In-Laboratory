@@ -1,0 +1,19 @@
+﻿#pragma kernel Colorize
+
+uint ImageWidth;
+uint ImageHeight;
+Texture2D<float4> Original;
+RWTexture2D<float4> Output;
+
+float4 Color;
+
+[numthreads(8,8,1)]
+void Colorize(uint3 id : SV_DispatchThreadID)
+{
+	float4 source = Original[id.xy];
+
+	float3 color = dot(source.rgb, float3(0.299, 0.587, 0.114));
+	color *= Color.rgb;
+
+	Output[id.xy] = float4(color.rgb, source.a);
+}

@@ -1,0 +1,20 @@
+﻿#pragma kernel Sepia
+
+uint ImageWidth;
+uint ImageHeight;
+Texture2D<float4> Original;
+RWTexture2D<float4> Output;
+
+float Value;
+
+[numthreads(8,8,1)]
+void Sepia(uint3 id : SV_DispatchThreadID)
+{
+	float4 output = Original[id.xy];
+	float r = 0.393 * output.r + 0.769 * output.g + 0.189 * output.b;
+	float g = 0.349 * output.r + 0.686 * output.g + 0.168 * output.b;
+	float b = 0.272 * output.r + 0.534 * output.g + 0.131 * output.b;
+
+	float3 c = lerp(output.rgb, float3(r, g, b), Value);
+	Output[id.xy] = float4(c, output.a);
+}

@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 1a2542d2e1e6b7f478f915f1272a7b30
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 182987
+  packageName: Channel Packer Pro
+  packageVersion: 1.5.3
+  assetPath: Assets/DarkMoorGames/ChannelPackerPro/Editor/Postprocessors/Editor/BlurPostprocessorEditor.cs
+  uploadId: 480178
