@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 6792160a59718f643b7c15ea2925f2fc
+ComputeShaderImporter:
+  externalObjects: {}
+  currentAPIMask: 2052
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 182987
+  packageName: Channel Packer Pro
+  packageVersion: 1.5.3
+  assetPath: Assets/DarkMoorGames/ChannelPackerPro/Editor/Shaders/Generators/Clouds.compute
+  uploadId: 480178

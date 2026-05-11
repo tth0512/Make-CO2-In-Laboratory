@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 4fc9f559bbb2180469a978fa735ea019
+ComputeShaderImporter:
+  externalObjects: {}
+  currentAPIMask: 4
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 182987
+  packageName: Channel Packer Pro
+  packageVersion: 1.5.3
+  assetPath: Assets/DarkMoorGames/ChannelPackerPro/Editor/Shaders/Postprocessors/Offset.compute
+  uploadId: 480178

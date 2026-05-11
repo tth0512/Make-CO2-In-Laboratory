@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 707b553c02e064446bdfee2fed69e470
+ComputeShaderImporter:
+  externalObjects: {}
+  currentAPIMask: 2052
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 182987
+  packageName: Channel Packer Pro
+  packageVersion: 1.5.3
+  assetPath: Assets/DarkMoorGames/ChannelPackerPro/Editor/Shaders/Postprocessors/Colorize.compute
+  uploadId: 480178

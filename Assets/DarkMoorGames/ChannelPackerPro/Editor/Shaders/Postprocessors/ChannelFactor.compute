@@ -1,0 +1,22 @@
+﻿#pragma kernel ChannelFactor
+
+uint ImageWidth;
+uint ImageHeight;
+Texture2D<float4> Original;
+RWTexture2D<float4> Output;
+
+float RedFactor;
+float GreenFactor;
+float BlueFactor;
+float AlphaFactor;
+
+[numthreads(8,8,1)]
+void ChannelFactor(uint3 id : SV_DispatchThreadID)
+{
+	float4 source = Original[id.xy];
+	source.r *= RedFactor;
+	source.g *= GreenFactor;
+	source.b *= BlueFactor;
+	source.a *= AlphaFactor;
+	Output[id.xy] = source;
+}

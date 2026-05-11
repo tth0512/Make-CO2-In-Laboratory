@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 9e2005b06601c3c41b2b3551381e2921
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 182987
+  packageName: Channel Packer Pro
+  packageVersion: 1.5.3
+  assetPath: Assets/DarkMoorGames/ChannelPackerPro/Editor/ImageGenerators/Editor/BorderGeneratorEditor.cs
+  uploadId: 480178

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 082e928007ed3c341938dccb9a2e9f60
+ComputeShaderImporter:
+  externalObjects: {}
+  currentAPIMask: 2052
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 182987
+  packageName: Channel Packer Pro
+  packageVersion: 1.5.3
+  assetPath: Assets/DarkMoorGames/ChannelPackerPro/Editor/Shaders/Postprocessors/ColorReplace.compute
+  uploadId: 480178

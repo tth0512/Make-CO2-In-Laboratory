@@ -1,0 +1,19 @@
+﻿#pragma kernel BrightnessContrast
+
+uint ImageWidth;
+uint ImageHeight;
+Texture2D<float4> Original;
+RWTexture2D<float4> Output;
+
+float Brightness;
+float Contrast;
+
+[numthreads(8,8,1)]
+void BrightnessContrast(uint3 id : SV_DispatchThreadID)
+{
+	float4 output = Original[id.xy];
+	float factor = (Contrast + 1.0) / (1.0 - Contrast);
+
+	output.rgb = saturate(output.rgb + Brightness) * factor;
+	Output[id.xy] = output;
+}

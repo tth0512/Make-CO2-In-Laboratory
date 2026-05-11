@@ -1,0 +1,112 @@
+﻿#pragma kernel Blur
+#pragma kernel BlurClamp
+
+uint ImageWidth;
+uint ImageHeight;
+Texture2D<float4> Original;
+RWTexture2D<float4> Output;
+
+[numthreads(8,8,1)]
+void Blur(uint3 id : SV_DispatchThreadID)
+{
+	float4 color = float4(0.0, 0.0, 0.0, 0.0);
+
+	uint2 up = id.xy + uint2(0, 1);
+	uint2 down = id.xy + uint2(0, -1);
+	uint2 left = id.xy + uint2(-1, 0);
+	uint2 right = id.xy + uint2(1, 0);
+
+	uint2 upRight = id.xy + uint2(1, 1);
+	uint2 upLeft = id.xy + uint2(-1, 1);
+	uint2 downLeft = id.xy + uint2(-1, -1);
+	uint2 downRight = id.xy + uint2(1, -1);
+
+	if (id.y == ImageHeight - 1)
+	{
+		up.y = 0;
+		upRight.y = 0;
+		upLeft.y = 0;
+	}
+	if (id.y == 0)
+	{
+		down.y = ImageHeight - 1;
+		downLeft.y = ImageHeight - 1;
+		downRight.y = ImageHeight - 1;
+	}
+	if (id.x == ImageWidth - 1)
+	{
+		right.x = 0;
+		upRight.x = 0;
+		downRight.x = 0;
+	}
+	if (id.x == 0)
+	{
+		left.x = ImageWidth - 1;
+		downLeft.x = ImageWidth - 1;
+		upLeft.x = ImageWidth - 1;
+	}
+
+	color += Original[up.xy];
+	color += Original[down.xy];
+	color += Original[left.xy];
+	color += Original[right.xy];
+
+	color += Original[upRight.xy];
+	color += Original[upLeft.xy];
+	color += Original[downLeft.xy];
+	color += Original[downRight.xy];
+
+	Output[id.xy] = color / 8;
+}
+[numthreads(8, 8, 1)]
+void BlurClamp(uint3 id : SV_DispatchThreadID)
+{
+	float4 color = float4(0.0, 0.0, 0.0, 0.0);
+
+	uint2 up = id.xy + uint2(0, 1);
+	uint2 down = id.xy + uint2(0, -1);
+	uint2 left = id.xy + uint2(-1, 0);
+	uint2 right = id.xy + uint2(1, 0);
+
+	uint2 upRight = id.xy + uint2(1, 1);
+	uint2 upLeft = id.xy + uint2(-1, 1);
+	uint2 downLeft = id.xy + uint2(-1, -1);
+	uint2 downRight = id.xy + uint2(1, -1);
+
+	if (id.y == ImageHeight - 1)
+	{
+		up.y = id.y;
+		upRight.y = id.y;
+		upLeft.y = id.y;
+	}
+	if (id.y == 0)
+	{
+		down.y = 0;
+		downLeft.y = 0;
+		downRight.y = 0;
+	}
+	if (id.x == ImageWidth - 1)
+	{
+		right.x = ImageWidth - 1;
+		upRight.x = ImageWidth - 1;
+		downRight.x = ImageWidth - 1;
+	}
+	if (id.x == 0)
+	{
+		left.x = 0;
+		downLeft.x = 0;
+		upLeft.x = 0;
+	}
+
+	color += Original[up.xy];
+	color += Original[down.xy];
+	color += Original[left.xy];
+	color += Original[right.xy];
+
+	color += Original[upRight.xy];
+	color += Original[upLeft.xy];
+	color += Original[downLeft.xy];
+	color += Original[downRight.xy];
+
+	Output[id.xy] = color / 8;
+}

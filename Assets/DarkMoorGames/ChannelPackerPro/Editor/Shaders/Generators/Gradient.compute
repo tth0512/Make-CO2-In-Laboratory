@@ -1,0 +1,49 @@
+﻿#pragma kernel LinearGradient
+#pragma kernel BiLinearGradient
+
+uint ImageWidth;
+uint ImageHeight;
+RWTexture2D<float4> Output;
+
+float4 Color1;
+float4 Color2;
+float Hardness;
+float Rotation;
+
+#if !defined(PI)
+#define PI 3.14159265358979323846
+#endif
+
+[numthreads(8,8,1)]
+void LinearGradient(uint3 id : SV_DispatchThreadID)
+{
+	float2 uv = float2((id.x + 0.5) / ImageWidth, (id.y + 0.5) / ImageHeight);
+
+	float s = sin(-Rotation * (PI / 180.0));
+	float c = cos(-Rotation * (PI / 180.0));
+
+	float2x2 mat = float2x2(c, -s, s, c);
+	float rot = (mul(uv.xy - 0.5, mat) + 0.5).x;
+	float final = smoothstep(Hardness - 0.5, (1.0 - Hardness) + 0.5001, rot);
+
+	float4 color = lerp(Color2, Color1, final);
+	Output[id.xy] = float4(color);
+}
+[numthreads(8, 8, 1)]
+void BiLinearGradient(uint3 id : SV_DispatchThreadID)
+{
+	float2 uv = float2((id.x + 0.5) / ImageWidth, (id.y + 0.5) / ImageHeight);
+
+	float s = sin(-Rotation * (PI / 180.0));
+	float c = cos(-Rotation * (PI / 180.0));
+
+	float2x2 mat = float2x2(c, -s, s, c);
+	float rot = (mul(uv.xy - 0.5, mat) + 0.5).x;
+
+	float dist = 1.0 - distance(rot, 0.5);
+
+	float final = smoothstep(min(Hardness, 1), 1, dist);
+
+	float4 color = lerp(Color2, Color1, final);
+	Output[id.xy] = float4(color);
+}

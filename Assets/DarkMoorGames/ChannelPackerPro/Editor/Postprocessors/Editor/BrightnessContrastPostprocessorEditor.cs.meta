@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: ac59fa383a3f82b40bc0677d7ca5c8a3
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 182987
+  packageName: Channel Packer Pro
+  packageVersion: 1.5.3
+  assetPath: Assets/DarkMoorGames/ChannelPackerPro/Editor/Postprocessors/Editor/BrightnessContrastPostprocessorEditor.cs
+  uploadId: 480178

@@ -1,0 +1,214 @@
+﻿#pragma kernel PreviewRGBA
+#pragma kernel PreviewRGB
+
+#pragma kernel PreviewRed
+#pragma kernel PreviewGreen
+#pragma kernel PreviewBlue
+#pragma kernel PreviewAlpha
+
+#pragma kernel PreviewRedGrey
+#pragma kernel PreviewGreenGrey
+#pragma kernel PreviewBlueGrey
+
+#pragma kernel PreviewRedGreen
+#pragma kernel PreviewRedBlue
+#pragma kernel PreviewRedAlpha
+
+#pragma kernel PreviewGreenBlue
+#pragma kernel PreviewGreenAlpha
+#pragma kernel PreviewBlueAlpha
+
+#pragma kernel PreviewRedGreenAlpha
+#pragma kernel PreviewRedBlueAlpha
+#pragma kernel PreviewGreenBlueAlpha
+
+Texture2D<float4> Input;
+RWTexture2D<float4> Output;
+bool LinearSpace;
+
+[numthreads(8, 8, 1)]
+void PreviewRGBA(uint3 id : SV_DispatchThreadID)
+{
+	float4 color = Input[id.xy];
+	if (LinearSpace)
+	{
+		color.rgb = pow(abs(color.rgb), 2.2);
+	}
+	Output[id.xy] = color;
+}
+[numthreads(8, 8, 1)]
+void PreviewRGB(uint3 id : SV_DispatchThreadID)
+{
+	float4 color = Input[id.xy];
+	if (LinearSpace)
+	{
+		color.rgb = pow(abs(color.rgb), 2.2);
+	}
+	Output[id.xy] = float4(color.rgb, 1.0);
+}
+[numthreads(8, 8, 1)]
+void PreviewRed(uint3 id : SV_DispatchThreadID)
+{
+	float4 color = Input[id.xy];
+	if (LinearSpace)
+	{
+		color.r = pow(abs(color.r), 2.2);
+	}
+	Output[id.xy] = float4(color.r, 0.0, 0.0, 1.0);
+}
+[numthreads(8, 8, 1)]
+void PreviewGreen(uint3 id : SV_DispatchThreadID)
+{
+	float4 color = Input[id.xy];
+	if (LinearSpace)
+	{
+		color.g = pow(abs(color.g), 2.2);
+	}
+	Output[id.xy] = float4(0.0, color.g, 0.0, 1.0);
+}
+[numthreads(8, 8, 1)]
+void PreviewBlue(uint3 id : SV_DispatchThreadID)
+{
+	float4 color = Input[id.xy];
+	if (LinearSpace)
+	{
+		color.b = pow(abs(color.b), 2.2);
+	}
+	Output[id.xy] = float4(0.0, 0.0, color.b, 1.0);
+}
+[numthreads(8, 8, 1)]
+void PreviewAlpha(uint3 id : SV_DispatchThreadID)
+{
+	float alpha = Input[id.xy].a;
+	if (LinearSpace)
+	{
+		alpha = pow(abs(alpha), 2.2);
+	}
+	Output[id.xy] = float4(alpha, alpha, alpha, 1.0);
+}
+[numthreads(8, 8, 1)]
+void PreviewRedGrey(uint3 id : SV_DispatchThreadID)
+{
+	float4 color = Input[id.xy];
+	if (LinearSpace)
+	{
+		color.r = pow(abs(color.r), 2.2);
+	}
+	Output[id.xy] = float4(color.r, color.r, color.r, 1.0);
+}
+[numthreads(8, 8, 1)]
+void PreviewGreenGrey(uint3 id : SV_DispatchThreadID)
+{
+	float4 color = Input[id.xy];
+	if (LinearSpace)
+	{
+		color.g = pow(abs(color.g), 2.2);
+	}
+	Output[id.xy] = float4(color.g, color.g, color.g, 1.0);
+}
+[numthreads(8, 8, 1)]
+void PreviewBlueGrey(uint3 id : SV_DispatchThreadID)
+{
+	float4 color = Input[id.xy];
+	if (LinearSpace)
+	{
+		color.b = pow(abs(color.b), 2.2);
+	}
+	Output[id.xy] = float4(color.b, color.b, color.b, 1.0);
+}
+[numthreads(8, 8, 1)]
+void PreviewRedGreen(uint3 id : SV_DispatchThreadID)
+{
+	float4 color = Input[id.xy];
+	if (LinearSpace)
+	{
+		color.r = pow(abs(color.r), 2.2);
+		color.g = pow(abs(color.g), 2.2);
+	}
+	Output[id.xy] = float4(color.r, color.g, 0.0, 1.0);
+}
+[numthreads(8, 8, 1)]
+void PreviewRedBlue(uint3 id : SV_DispatchThreadID)
+{
+	float4 color = Input[id.xy];
+	if (LinearSpace)
+	{
+		color.r = pow(abs(color.r), 2.2);
+		color.b = pow(abs(color.b), 2.2);
+	}
+	Output[id.xy] = float4(color.r, 0.0, color.b, 1.0);
+}
+[numthreads(8, 8, 1)]
+void PreviewRedAlpha(uint3 id : SV_DispatchThreadID)
+{
+	float4 color = Input[id.xy];
+	if (LinearSpace)
+	{
+		color.r = pow(abs(color.r), 2.2);
+	}
+	Output[id.xy] = float4(color.r, 0.0, 0.0, color.a);
+}
+[numthreads(8, 8, 1)]
+void PreviewGreenBlue(uint3 id : SV_DispatchThreadID)
+{
+	float4 color = Input[id.xy];
+	if (LinearSpace)
+	{
+		color.g = pow(abs(color.g), 2.2);
+		color.b = pow(abs(color.b), 2.2);
+	}
+	Output[id.xy] = float4(0.0, color.g, color.b, 1.0);
+}
+[numthreads(8, 8, 1)]
+void PreviewGreenAlpha(uint3 id : SV_DispatchThreadID)
+{
+	float4 color = Input[id.xy];
+	if (LinearSpace)
+	{
+		color.g = pow(abs(color.g), 2.2);
+	}
+	Output[id.xy] = float4(0.0, color.g, 0.0, color.a);
+}
+[numthreads(8, 8, 1)]
+void PreviewBlueAlpha(uint3 id : SV_DispatchThreadID)
+{
+	float4 color = Input[id.xy];
+	if (LinearSpace)
+	{
+		color.b = pow(abs(color.b), 2.2);
+	}
+	Output[id.xy] = float4(0.0, 0.0, color.b, color.a);
+}
+[numthreads(8, 8, 1)]
+void PreviewRedGreenAlpha(uint3 id : SV_DispatchThreadID)
+{
+	float4 color = Input[id.xy];
+	if (LinearSpace)
+	{
+		color.r = pow(abs(color.r), 2.2);
+		color.g = pow(abs(color.g), 2.2);
+	}
+	Output[id.xy] = float4(color.r, color.g, 0.0, color.a);
+}
+[numthreads(8, 8, 1)]
+void PreviewRedBlueAlpha(uint3 id : SV_DispatchThreadID)
+{
+	float4 color = Input[id.xy];
+	if (LinearSpace)
+	{
+		color.r = pow(abs(color.r), 2.2);
+		color.b = pow(abs(color.b), 2.2);
+	}
+	Output[id.xy] = float4(color.r, 0.0, color.b, color.a);
+}
+[numthreads(8, 8, 1)]
+void PreviewGreenBlueAlpha(uint3 id : SV_DispatchThreadID)
+{
+	float4 color = Input[id.xy];
+	if (LinearSpace)
+	{
+		color.g = pow(abs(color.g), 2.2);
+		color.b = pow(abs(color.b), 2.2);
+	}
+	Output[id.xy] = float4(0.0, color.g, color.b, color.a);
+}

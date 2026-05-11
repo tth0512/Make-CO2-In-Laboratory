@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: d76cee1f3b2bb3a4e8d91895a4f4b396
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 182987
+  packageName: Channel Packer Pro
+  packageVersion: 1.5.3
+  assetPath: Assets/DarkMoorGames/ChannelPackerPro/Editor/Postprocessors/Editor/ColorReplacePostprocessorEditor.cs
+  uploadId: 480178

@@ -1,0 +1,18 @@
+﻿#pragma kernel Offset
+
+uint ImageWidth;
+uint ImageHeight;
+Texture2D<float4> Original;
+RWTexture2D<float4> Output;
+
+int OffsetX;
+int OffsetY;
+
+[numthreads(8, 8, 1)]
+void Offset(uint3 id : SV_DispatchThreadID)
+{
+	int2 p = int2(id.xy + int2(OffsetX, OffsetY));
+	p.x = p.x % ImageWidth;
+	p.y = p.y % ImageHeight;
+	Output[id.xy] = Original[p];
+}

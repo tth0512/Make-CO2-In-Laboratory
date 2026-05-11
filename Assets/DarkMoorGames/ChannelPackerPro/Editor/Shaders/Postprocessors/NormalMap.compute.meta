@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: d3c48d6e70970034f8c21bcb6b39216c
+ComputeShaderImporter:
+  externalObjects: {}
+  currentAPIMask: 2052
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 182987
+  packageName: Channel Packer Pro
+  packageVersion: 1.5.3
+  assetPath: Assets/DarkMoorGames/ChannelPackerPro/Editor/Shaders/Postprocessors/NormalMap.compute
+  uploadId: 480178

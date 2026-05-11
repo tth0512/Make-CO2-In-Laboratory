@@ -1,0 +1,29 @@
+﻿#pragma kernel Border
+
+uint ImageWidth;
+uint ImageHeight;
+RWTexture2D<float4> Output;
+
+int Thickness;
+float4 Color1;
+float4 Color2;
+
+[numthreads(8,8,1)]
+void Border(uint3 id : SV_DispatchThreadID)
+{
+	float4 output = float4(0.0, 0.0, 0.0, 0.0);
+	float2 uv = float2((id.x + 0.5) / ImageWidth, (id.y + 0.5) / ImageHeight);
+
+	int2 pixel = int2(floor(uv.x * ImageWidth), floor(uv.y * ImageHeight));
+	int thickness = min(Thickness, max(ImageWidth, ImageHeight));
+
+	if (pixel.x < thickness || pixel.x >= ((int)ImageWidth - thickness) || pixel.y < thickness || pixel.y >= ((int)ImageHeight - thickness))
+	{
+		output = Color1;
+	}
+	else
+	{
+		output = Color2;
+	}
+	Output[id.xy] = output;
+}

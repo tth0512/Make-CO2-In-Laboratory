@@ -1,0 +1,55 @@
+﻿#pragma kernel Clouds
+
+uint ImageWidth;
+uint ImageHeight;
+RWTexture2D<float4> Output;
+
+int IntValue;
+float Scale;
+float OffsetX;
+float OffsetY;
+
+float N21(float2 n)
+{
+	return frac(sin(dot(n, float2(12.9898, 78.233))) * 43758.5453123);
+}
+float CloudNoise(float2 uv)
+{
+	float2 gridUv = smoothstep(0.0, 1.0, frac(uv));
+	float2 id = floor(uv);
+
+	float bl = N21(id);
+	float br = N21(id + float2(1.0, 0.0));
+	float b = lerp(bl, br, gridUv.x);
+
+	float tl = N21(id + float2(0.0, 1.0));
+	float tr = N21(id + float2(1.0, 1.0));
+	float t = lerp(tl, tr, gridUv.x);
+
+	return lerp(b, t, gridUv.y);
+}
+
+[numthreads(8,8,1)]
+void Clouds(uint3 id : SV_DispatchThreadID)
+{
+	float2 uv = float2((id.x + 0.5) / ImageWidth, (id.y + 0.5) / ImageHeight);
+
+	int octaves = IntValue;
+	float frequency = Scale * 2.0;
+	float f = 0.5;
+
+	float2 offset = (((uv - 0.5) * Scale) + float2(OffsetX, OffsetY));
+	float c = CloudNoise(offset);
+
+	for (int i = 0; i < octaves; i++)
+	{
+		c += CloudNoise(offset * frequency / Scale) * f;
+		frequency *= 2.0;
+		f /= 2.0;
+	}
+	if (octaves > 0)
+	{
+		c /= 2.0;
+	}
+	Output[id.xy] = float4(c, c, c, 1.0);
+}

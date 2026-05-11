@@ -1,0 +1,32 @@
+﻿#pragma kernel Flip
+
+uint ImageWidth;
+uint ImageHeight;
+Texture2D<float4> Original;
+RWTexture2D<float4> Output;
+
+bool Horizontal;
+bool Vertical;
+
+[numthreads(8,8,1)]
+void Flip(uint3 id : SV_DispatchThreadID)
+{
+	float4 color;
+	if (Horizontal && Vertical)
+	{
+		color = Original[uint2(ImageWidth - 1 - id.x, ImageHeight - 1 - id.y)];
+	}
+	else if (Horizontal)
+	{
+		color = Original[uint2(ImageWidth - 1 - id.x, id.y)];
+	}
+	else if (Vertical)
+	{
+		color = color = Original[uint2(id.x, ImageHeight - 1 - id.y)];
+	}
+	else
+	{
+		color = Original[id.xy];
+	}
+	Output[id.xy] = color;
+}
