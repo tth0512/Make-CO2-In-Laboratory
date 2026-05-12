@@ -68,7 +68,20 @@ public class ExperimentReactionManager : MonoBehaviour, IInteractable
             }
             else
             {
-                
+                var heldObject = PlayerManager.Instance.GetHeldObject();
+                if (heldObject.name == installedTargets[currentInstallingIndex])
+                {
+                    currentInstallingIndex++;
+                    var toBeInstalledObject = transform.Find(heldObject.name);
+                    if (toBeInstalledObject != null) {
+                        toBeInstalledObject.GetComponent<>
+                    Debug.Log($"[ExperimentReactionManager] Installed: {heldObject.name}");
+                    if (currentInstallingIndex >= installedTargets.Count)
+                    {
+                        isExperimentReady = true;
+                        Debug.Log("<color=yellow>[INFO]</color> All targets installed. Interact with the valve to start the experiment.");
+                    }
+                }
             }
         }
     }
