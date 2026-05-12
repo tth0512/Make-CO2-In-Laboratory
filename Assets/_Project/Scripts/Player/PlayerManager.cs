@@ -37,6 +37,11 @@ public class PlayerManager : MonoBehaviour
         interactionManager = InteractionManager.Ins;
     }
 
+    public GameObject GetHeldObject()
+    {
+        return playerPickUp.GetHeldObject();
+    }
+
     public void DisablePlayer()
     {
         playerController.enabled = false;

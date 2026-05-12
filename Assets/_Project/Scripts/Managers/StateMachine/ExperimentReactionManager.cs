@@ -1,4 +1,5 @@
 using Cinemachine;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ExperimentReactionManager : MonoBehaviour, IInteractable
@@ -7,6 +8,12 @@ public class ExperimentReactionManager : MonoBehaviour, IInteractable
 
     [Header("References")]
     public CinemachineVirtualCamera experimentCam;
+
+    [Header("Placement Validation")]
+    public bool isExperimentReady;
+    public List<string> installedTargets = new List<string>();
+    private int currentInstallingIndex = 0;
+
 
     private PlayerManager playerManager;
 
@@ -24,6 +31,16 @@ public class ExperimentReactionManager : MonoBehaviour, IInteractable
     private void Start()
     {
         stateMachine.Initialize<ExperimentSetupState>();
+        AddInstalledTarget();
+    }
+
+    private void AddInstalledTarget()
+    {
+        installedTargets.Add("GasWashBottle");
+        installedTargets.Add("CO2");
+        installedTargets.Add("Valve_body");
+        installedTargets.Add("Valve_Head");
+        installedTargets.Add("ConnectorHose");
     }
 
     private void Update()
@@ -43,7 +60,17 @@ public class ExperimentReactionManager : MonoBehaviour, IInteractable
     public void Interact(PlayerPickUp interactor)
     {
         if (stateMachine.CurrentState is ExperimentSetupState)
-            stateMachine.ChangeState<ExperimentReadyState>();
+        {
+            if (isExperimentReady)
+            {
+                stateMachine.ChangeState<ExperimentReadyState>();
+                Debug.Log("<color=green>[SUCCESS]</color> Experiment 1: Setup complete. Valve active.");
+            }
+            else
+            {
+                
+            }
+        }
     }
 
     public void EnterExperimentMode()

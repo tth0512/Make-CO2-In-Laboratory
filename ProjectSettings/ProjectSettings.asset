@@ -867,11 +867,11 @@ PlayerSettings:
   captureStartupLogs: {}
   activeInputHandler: 1
   windowsGamepadBackendHint: 0
-  cloudProjectId: 1ee1ff76-c696-4ddf-bcd5-ed905dd43bf7
+  cloudProjectId: 340feadd-b3cc-4fdd-8092-af121d415b61
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
   projectName: Test1
-  organizationId: seeringc
+  organizationId: thinhhvt15
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}
