@@ -47,25 +47,37 @@ public class PlayerPickUp : MonoBehaviour
         if (Time.frameCount == lastActionFrame) return;
         lastActionFrame = Time.frameCount;
 
-        if (heldObject != null)
-        {
-            TryPlaceHeldObject();
-            return;
-        }
-
-        if (InteractionManager.Ins == null) return;
         var hoveredObject = InteractionManager.Ins.GetHoveredObject();
-        if (hoveredObject == null) return;
 
-        if (TryGetInteractable(hoveredObject, out IInteractable interactable))
+        if (heldObject != null && heldObject.CompareTag("ExperimentStuff") && hoveredObject != null 
+            && TryGetInteractable(hoveredObject, out IInteractable interactable))
         {
-            Debug.Log("Interacting with: " + hoveredObject.name);
+            Debug.Log("Interacting with Experiment object: " + hoveredObject.name);
             if (AudioManager.Ins != null)
                 AudioManager.Ins.PlayBubbleInteractSound();
             interactable.Interact(this);
             return;
         }
 
+        if (heldObject != null)
+        {
+            TryPlaceHeldObject();
+            Debug.Log("Placed object");
+            return;
+        }
+
+        if (hoveredObject == null) return;
+
+        if (TryGetInteractable(hoveredObject, out IInteractable interactable1))
+        {
+            Debug.Log("Interacting with: " + hoveredObject.name);
+            if (AudioManager.Ins != null)
+                AudioManager.Ins.PlayBubbleInteractSound();
+            interactable1.Interact(this);
+            return;
+        }
+
+        Debug.Log("PickUp Object");
         TryPickUpObject(hoveredObject);
     }
 
@@ -86,6 +98,11 @@ public class PlayerPickUp : MonoBehaviour
         SetLayerRecursively(target.transform, LayerMask.NameToLayer("Ignore Raycast"));
 
         Rigidbody body = target.GetComponent<Rigidbody>();
+        while(target.transform.parent != null)
+        {
+            target = target.transform.parent.gameObject;
+        }
+
         if (body != null)
         {
             body.isKinematic = true;
@@ -237,17 +254,7 @@ public class PlayerPickUp : MonoBehaviour
             body.isKinematic = true;
         }
 
-        RemoveHoverOutline();
         ApplyHoverMaterial();
-    }
-
-    private void RemoveHoverOutline()
-    {
-        var outlines = hoverObject.GetComponentsInChildren<Outline>();
-        for (int i = 0; i < outlines.Length; i++)
-        {
-            Destroy(outlines[i]);
-        }
     }
 
     private void ApplyHoverMaterial()
@@ -263,6 +270,21 @@ public class PlayerPickUp : MonoBehaviour
                 materials[i] = hoverMaterial;
 
             renderer.sharedMaterials = materials;
+        }
+    }
+
+    public void DestroyHeldObject()
+    {
+        if (hoverObject != null)
+        {
+            Destroy(hoverObject);
+            hoverObject = null;
+        }
+
+        if (heldObject != null)
+        {
+            Destroy(heldObject.gameObject);
+            heldObject = null;
         }
     }
 

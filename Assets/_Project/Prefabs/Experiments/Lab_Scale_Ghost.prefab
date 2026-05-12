@@ -226,7 +226,7 @@ GameObject:
   - component: {fileID: 999233087087727140}
   m_Layer: 0
   m_Name: Lab_Scale_Ghost
-  m_TagString: Untagged
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

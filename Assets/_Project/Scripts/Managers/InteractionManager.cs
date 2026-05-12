@@ -12,9 +12,9 @@ public class InteractionManager : MonoBehaviour
         }
     }
     private GameObject hoveredObject;
-    private Outline hoveredOutline;
     private GameObject hoverSoundObject;
     private Camera mainCamera;
+
     [SerializeField] private LayerMask raycastMask = ~0;
     public GameObject GetHoveredObject() => hoveredObject;
     private void Awake()
@@ -52,27 +52,29 @@ public class InteractionManager : MonoBehaviour
             if (objectHitByRaycast != null)
             {
                 GameObject rootInteractable = FindInteractableRoot(objectHitByRaycast);
-                
+
                 if (rootInteractable != null && rootInteractable != hoveredObject)
                 {
-                    if (hoveredOutline != null)
-                        hoveredOutline.enabled = false;
-
-                    hoveredObject = rootInteractable;
-                    hoveredOutline = hoveredObject.GetComponent<Outline>();
-                    // If no outline on root, try the specific part hit
-                    if (hoveredOutline == null) hoveredOutline = objectHitByRaycast.GetComponent<Outline>();
-                    
-                    if (hoveredOutline != null)
-                        hoveredOutline.enabled = true;
-                    
-                    if (AudioManager.Ins != null && hoverSoundObject != hoveredObject)
+                    if (rootInteractable.CompareTag("Interactable") || rootInteractable.CompareTag("ExperimentStuff") || rootInteractable.CompareTag("Experiment"))
                     {
-                        AudioManager.Ins.PlayBubbleHoverSound();
-                        hoverSoundObject = hoveredObject;
+                        hoveredObject = rootInteractable;
+                        if (AudioManager.Ins != null && hoverSoundObject != hoveredObject)
+                        {
+                            AudioManager.Ins.PlayBubbleHoverSound();
+                            hoverSoundObject = hoveredObject;
+                        }
+                    }
+                    else if (rootInteractable.CompareTag("showcase") || rootInteractable.CompareTag("Cabinet"))
+                    {
+                        hoveredObject = rootInteractable;
+                        if (AudioManager.Ins != null && hoverSoundObject != hoveredObject)
+                        {
+                            AudioManager.Ins.PlayBubbleHoverSound();
+                            hoverSoundObject = hoveredObject;
+                        }
                     }
                 }
-                else if (rootInteractable == null && hoveredOutline != null)
+                else if (rootInteractable == null)
                 {
                     ClearHover();
                 }
@@ -89,7 +91,8 @@ public class InteractionManager : MonoBehaviour
         Transform current = obj.transform;
         while (current != null)
         {
-            if (current.CompareTag("Interactable") || current.CompareTag("showcase") || current.CompareTag("Cabinet"))
+            if (current.CompareTag("Interactable") || current.CompareTag("showcase") || current.CompareTag("Cabinet")
+                || current.CompareTag("Experiment") || current.CompareTag("ExperimentStuff"))   
             {
                 return current.gameObject;
             }
@@ -100,10 +103,7 @@ public class InteractionManager : MonoBehaviour
 
         private void ClearHover()
         {
-        if (hoveredOutline != null)
-            hoveredOutline.enabled = false;
         hoveredObject = null;
-        hoveredOutline = null;
         hoverSoundObject = null;
         }
         }
