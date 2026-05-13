@@ -1,15 +1,15 @@
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(Experiment1Manager))]
-public class Experiment1ManagerEditor : Editor
+[CustomEditor(typeof(ExperimentManager))]
+public class ExperimentManagerEditor : Editor
 {
     public override void OnInspectorGUI()
     {
         // Draw the default inspector
         DrawDefaultInspector();
 
-        Experiment1Manager manager = (Experiment1Manager)target;
+        ExperimentManager manager = (ExperimentManager)target;
 
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("Editor Tools", EditorStyles.boldLabel);
@@ -25,7 +25,7 @@ public class Experiment1ManagerEditor : Editor
         }
     }
 
-    private void RecordTargets(Experiment1Manager manager)
+    private void RecordTargets(ExperimentManager manager)
     {
         Undo.RecordObject(manager, "Record Experiment Targets");
         
@@ -44,7 +44,7 @@ public class Experiment1ManagerEditor : Editor
         EditorUtility.SetDirty(manager);
     }
 
-    private void SnapToTargets(Experiment1Manager manager)
+    private void SnapToTargets(ExperimentManager manager)
     {
         foreach (var target in manager.targets)
         {

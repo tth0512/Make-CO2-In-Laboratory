@@ -3,21 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 
 [ExecuteAlways]
-public class Experiment1Manager : MonoBehaviour
+public class ExperimentManager : MonoBehaviour
 {
-    public static Experiment1Manager Instance { get; private set; }
+    private static List<ExperimentManager> _instances = new List<ExperimentManager>();
+    public static IReadOnlyList<ExperimentManager> Instances => _instances;
 
     [Header("Experiment Components")]
     public Transform valveHead;
     public ParticleSystem bubbles;
-    public ParticleSystem gasFlow; // Gas flow effect
-public GameObject caoObject;
-public GameObject caco3Object;
+    public ParticleSystem gasFlow;
+    public GameObject activeObject; 
+    public GameObject resultObject; 
     
     [Header("Placement Validation")]
     public float distanceThreshold = 0.3f; 
     public float angleThreshold = 20f;
-public float visualRange = 2.5f; // Distance to turn green and allow snapping
+    public float visualRange = 2.5f; 
     public List<PlacementTarget> targets = new List<PlacementTarget>();
 
     [System.Serializable]
@@ -43,19 +44,16 @@ public float visualRange = 2.5f; // Distance to turn green and allow snapping
     private Dictionary<GameObject, GhostIndicator> indicators = new Dictionary<GameObject, GhostIndicator>();
     private float lastLogTime = 0f;
 
-    private void Awake()
-    {
-        Instance = this;
-    }
-
     private void OnEnable()
     {
+        if (!_instances.Contains(this)) _instances.Add(this);
         if (Application.isPlaying)
             StartCoroutine(SubscribeToEvents());
     }
 
     private void OnDisable()
     {
+        _instances.Remove(this);
         if (PlayerManager.Instance != null)
         {
             var pickup = PlayerManager.Instance.GetComponentInChildren<PlayerPickUp>();
@@ -80,17 +78,17 @@ public float visualRange = 2.5f; // Distance to turn green and allow snapping
     {
         if (Application.isPlaying)
         {
-            if (caco3Object != null) caco3Object.SetActive(false);
+            if (resultObject != null) resultObject.SetActive(false);
             if (bubbles != null) { var emission = bubbles.emission; emission.enabled = false; }
         }
         SetupIndicators();
         if (gasFlow == null)
         {
-            GameObject gfe = GameObject.Find("GasFlowEffect");
+            Transform gfe = transform.Find("GasFlowEffect");
             if (gfe != null) gasFlow = gfe.GetComponent<ParticleSystem>();
         }
         CheckPlacement();
-}
+    }
 
     private void SetupIndicators()
     {
@@ -108,7 +106,6 @@ public float visualRange = 2.5f; // Distance to turn green and allow snapping
 
     private void Update()
     {
-        // Setup in Editor or Play
         if (indicators.Count == 0 && targets.Count > 0) SetupIndicators();
 
         if (Application.isPlaying)
@@ -124,7 +121,6 @@ public float visualRange = 2.5f; // Distance to turn green and allow snapping
 
     private void SyncTargetsWithGhosts()
     {
-        bool changed = false;
         for (int i = 0; i < targets.Count; i++)
         {
             var target = targets[i];
@@ -138,7 +134,6 @@ public float visualRange = 2.5f; // Distance to turn green and allow snapping
                     target.targetPosition = ghost.transform.position;
                     target.targetRotation = ghost.transform.eulerAngles;
                     targets[i] = target;
-                    changed = true;
                 }
             }
         }
@@ -164,12 +159,9 @@ public float visualRange = 2.5f; // Distance to turn green and allow snapping
             
             Rigidbody rb = obj.GetComponent<Rigidbody>();
             bool isHeld = (held == obj);
-            // Being a bit more lenient with "At Target" for visual hiding
             bool isAtTarget = dist < distanceThreshold * 1.5f; 
             bool isKinematic = (rb != null && rb.isKinematic);
 
-            // Logic: Hide ONLY when effectively "installed"
-            // We consider it installed if it's NOT being held AND (it's very close OR it's kinematic and reasonably close)
             bool isPlaced = !isHeld && (dist < distanceThreshold || (isKinematic && isAtTarget));
             
             ghost.Show(!isPlaced);
@@ -177,23 +169,15 @@ public float visualRange = 2.5f; // Distance to turn green and allow snapping
             if (!isPlaced)
             {
                 bool isMatch = IsObjectMatch(held, obj);
-                // Feedback: Turn green if held object matches AND is within snap range
                 bool isNear = isMatch && dist < visualRange;
-
                 ghost.SetState(isNear);
-
-                if (isMatch && showDebugVisuals && Time.time > lastLogTime + 1.0f)
-                {
-                    Debug.Log($"<color=cyan>[GHOST]</color> {obj.name} Dist: {dist:F2} | Near: {isNear} | Kinematic: {isKinematic}");
-                    lastLogTime = Time.time;
-                }
             }
         }
     }
 
     private void UpdateIndicatorsEditorMode()
     {
-    #if UNITY_EDITOR
+#if UNITY_EDITOR
         GameObject selected = UnityEditor.Selection.activeGameObject;
         foreach (var kvp in indicators)
         {
@@ -202,8 +186,6 @@ public float visualRange = 2.5f; // Distance to turn green and allow snapping
             if (obj == null || ghost == null) continue;
 
             float dist = Vector3.Distance(obj.transform.position, ghost.transform.position);
-            
-            // In editor, hide if it's already at the target position
             bool isPlaced = dist < distanceThreshold;
             ghost.Show(!isPlaced);
 
@@ -213,7 +195,7 @@ public float visualRange = 2.5f; // Distance to turn green and allow snapping
                 ghost.SetState(isSelected && dist < 1.0f);
             }
         }
-    #endif
+#endif
     }
 
     private bool IsObjectMatch(GameObject held, GameObject target)
@@ -225,6 +207,16 @@ public float visualRange = 2.5f; // Distance to turn green and allow snapping
         string tN = target.name.ToLower().Replace("_hover", "").Replace("(clone)", "").Trim();
         
         return hN == tN || hN.Contains(tN) || tN.Contains(hN);
+    }
+
+    public static bool TryGetAnySnapTarget(GameObject heldObject, out Vector3 pos, out Vector3 rot)
+    {
+        pos = Vector3.zero; rot = Vector3.zero;
+        foreach (var manager in _instances)
+        {
+            if (manager.TryGetSnapTarget(heldObject, out pos, out rot)) return true;
+        }
+        return false;
     }
 
     public bool TryGetSnapTarget(GameObject heldObject, out Vector3 pos, out Vector3 rot)
@@ -244,7 +236,7 @@ public float visualRange = 2.5f; // Distance to turn green and allow snapping
                     return true;
                 }
             }
-}
+        }
         return false;
     }
 
@@ -258,7 +250,6 @@ public float visualRange = 2.5f; // Distance to turn green and allow snapping
             Vector3 goalPos = target.targetPosition;
             Vector3 goalRot = target.targetRotation;
 
-            // If ghost exists, it's the actual source of truth the player sees
             if (indicators.TryGetValue(target.interactableObject, out GhostIndicator ghost))
             {
                 goalPos = ghost.transform.position;
@@ -271,12 +262,10 @@ public float visualRange = 2.5f; // Distance to turn green and allow snapping
             Rigidbody rb = target.interactableObject.GetComponent<Rigidbody>();
             bool isFixed = rb != null && rb.isKinematic;
 
-            if (dist < distanceThreshold && angle < angleThreshold && isFixed) { /* Correct */ }
-            else { allCorrect = false; }
-}
+            if (!(dist < distanceThreshold && angle < angleThreshold && isFixed)) { allCorrect = false; }
+        }
 
         isExperimentReady = allCorrect;
-        if (allCorrect) Debug.Log("<color=green>[SUCCESS]</color> Experiment 1: Setup complete. Valve active.");
     }
 
     public void TryTurnValve()
@@ -289,8 +278,6 @@ public float visualRange = 2.5f; // Distance to turn green and allow snapping
     private IEnumerator RunReaction()
     {
         isReacting = true;
-        Debug.Log("Starting CO2 reaction...");
-        
         float dur = 1.0f; float elapsed = 0;
         Quaternion startRot = valveHead.localRotation;
         Quaternion targetRot = startRot * Quaternion.Euler(0, 0, 90);
@@ -301,33 +288,23 @@ public float visualRange = 2.5f; // Distance to turn green and allow snapping
         if (gasFlow != null) { var em = gasFlow.emission; em.enabled = true; gasFlow.Play(); }
         yield return new WaitForSeconds(2f);
 
-        float t = 0; Vector3 startScale = caoObject.transform.localScale; Vector3 endScale = caco3Object.transform.localScale;
-        caco3Object.SetActive(true);
-        while(t < 1.0f) { 
-            caoObject.transform.localScale = Vector3.Lerp(startScale, Vector3.zero, t);
-            caco3Object.transform.localScale = Vector3.Lerp(Vector3.zero, endScale, t);
-            t += Time.deltaTime / 3f; yield return null; 
+        if (activeObject != null && resultObject != null)
+        {
+            float t = 0; 
+            Vector3 startScale = activeObject.transform.localScale; 
+            Vector3 endScale = resultObject.transform.localScale;
+            resultObject.SetActive(true);
+            while(t < 1.0f) { 
+                activeObject.transform.localScale = Vector3.Lerp(startScale, Vector3.zero, t);
+                resultObject.transform.localScale = Vector3.Lerp(Vector3.zero, endScale, t);
+                t += Time.deltaTime / 3f; yield return null; 
+            }
+            activeObject.SetActive(false);
         }
-        caoObject.SetActive(false);
         
         yield return new WaitForSeconds(1f);
         if (bubbles != null) { var em = bubbles.emission; em.enabled = false; }
         if (gasFlow != null) { var em = gasFlow.emission; em.enabled = false; }
         isReacting = false; isCompleted = true;
-Debug.Log("Reaction Complete.");
-    }
-
-    private void OnDrawGizmos()
-    {
-        if (!showDebugVisuals) return;
-        foreach (var target in targets)
-        {
-            if (target.interactableObject == null) continue;
-            Gizmos.color = Color.white; Gizmos.DrawWireSphere(target.targetPosition, 0.1f);
-            if (Application.isPlaying && indicators.TryGetValue(target.interactableObject, out GhostIndicator ghost))
-            {
-                Gizmos.color = Color.blue; Gizmos.DrawLine(target.interactableObject.transform.position, target.targetPosition);
-            }
-        }
     }
 }

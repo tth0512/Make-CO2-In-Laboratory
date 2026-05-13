@@ -133,14 +133,14 @@ public class PlayerPickUp : MonoBehaviour
         bool snapped = false;
         
         // Check for snap target first
-        if (Experiment1Manager.Instance != null && Experiment1Manager.Instance.TryGetSnapTarget(heldObject.gameObject, out Vector3 snapPos, out Vector3 snapRot))
+        if (ExperimentManager.TryGetAnySnapTarget(heldObject.gameObject, out Vector3 snapPos, out Vector3 snapRot))
         {
             placePosition = snapPos;
             placeRotation = Quaternion.Euler(snapRot);
             snapped = true;
             Debug.Log($"[PlayerPickUp] Snapping {heldObject.name} to target.");
         }
-        else
+else
         {
             placeRotation = heldObject.rotation;
             GetPlacementPose(out placePosition, out placeRotation);

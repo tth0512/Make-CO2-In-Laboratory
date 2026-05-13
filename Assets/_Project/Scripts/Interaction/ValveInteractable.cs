@@ -2,11 +2,13 @@ using UnityEngine;
 
 public class ValveInteractable : MonoBehaviour, IInteractable
 {
+    public ExperimentManager experimentManager;
+
     public void Interact(PlayerPickUp interactor)
     {
-        if (Experiment1Manager.Instance != null)
+        if (experimentManager != null)
         {
-            Experiment1Manager.Instance.TryTurnValve();
+            experimentManager.TryTurnValve();
         }
     }
 }
