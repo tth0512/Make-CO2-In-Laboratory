@@ -1,4 +1,7 @@
 ﻿<Solution>
+  <Project Path="com.darkmoorgames.channelpackerpro.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
+  <Project Path="Assembly-CSharp-firstpass.csproj" />
+  <Project Path="Assembly-CSharp-Editor.csproj" />
   <Project Path="MeshyAssembly.csproj" />
 </Solution>

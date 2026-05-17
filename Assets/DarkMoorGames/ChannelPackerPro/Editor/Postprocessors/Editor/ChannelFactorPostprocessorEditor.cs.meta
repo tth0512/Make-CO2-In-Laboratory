@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 9a9137d14f2eadc4b81cbc7cb7af4068
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 182987
+  packageName: Channel Packer Pro
+  packageVersion: 1.5.3
+  assetPath: Assets/DarkMoorGames/ChannelPackerPro/Editor/Postprocessors/Editor/ChannelFactorPostprocessorEditor.cs
+  uploadId: 480178

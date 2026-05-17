@@ -1,0 +1,114 @@
+﻿#pragma kernel PaddingClamp
+#pragma kernel Padding
+#pragma kernel PaddingComplete
+
+uint ImageWidth;
+uint ImageHeight;
+Texture2D<float4> Original;
+RWTexture2D<float4> Output;
+
+RWStructuredBuffer<int> CompleteBuffer;
+
+[numthreads(8, 8, 1)]
+void PaddingClamp(uint3 id : SV_DispatchThreadID)
+{
+	float4 source = Original[id.xy];
+
+	uint2 up = id.xy + uint2(0, 1);
+	uint2 down = id.xy + uint2(0, -1);
+	uint2 left = id.xy + uint2(-1, 0);
+	uint2 right = id.xy + uint2(1, 0);
+
+	float4 upColor = Original[up];
+	float4 downColor = Original[down];
+	float4 leftColor = Original[left];
+	float4 rightColor = Original[right];
+
+	float4 color;
+	if (upColor.a > source.a)
+	{
+		color = upColor;
+	}
+	else if (downColor.a > source.a)
+	{
+		color = downColor;
+	}
+	else if (leftColor.a > source.a)
+	{
+		color = leftColor;
+	}
+	else if (rightColor.a > source.a)
+	{
+		color = rightColor;
+	}
+	else
+	{
+		color = source;
+	}
+	Output[id.xy] = color;
+}
+
+[numthreads(8, 8, 1)]
+void Padding(uint3 id : SV_DispatchThreadID)
+{
+	float4 source = Original[id.xy];
+
+	uint2 up = id.xy + uint2(0, 1);
+	uint2 down = id.xy + uint2(0, -1);
+	uint2 left = id.xy + uint2(-1, 0);
+	uint2 right = id.xy + uint2(1, 0);
+
+	if (up.y > ImageHeight - 1)
+	{
+		up.y = 0;
+	}
+	if (down.y < 0)
+	{
+		down.y = ImageHeight - 1;
+	}
+	if (left.x < 0)
+	{
+		left.x = ImageWidth - 1;
+	}
+	if (right.x > ImageWidth - 1)
+	{
+		right.x = 0;
+	}
+
+	float4 upColor = Original[up];
+	float4 downColor = Original[down];
+	float4 leftColor = Original[left];
+	float4 rightColor = Original[right];
+
+	float4 color;
+	if (upColor.a > source.a)
+	{
+		color = upColor;
+	}
+	else if (downColor.a > source.a)
+	{
+		color = downColor;
+	}
+	else if (leftColor.a > source.a)
+	{
+		color = leftColor;
+	}
+	else if (rightColor.a > source.a)
+	{
+		color = rightColor;
+	}
+	else
+	{
+		color = source;
+	}
+	Output[id.xy] = color;
+}
+[numthreads(8, 8, 1)]
+void PaddingComplete(uint3 id : SV_DispatchThreadID)
+{
+	float4 source = Original[id.xy];
+	if (source.a < 1.0)
+	{
+		CompleteBuffer[0] = 0;
+	}
+}

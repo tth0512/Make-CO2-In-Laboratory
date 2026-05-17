@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: b3646aa25ff5ac248a42ae1d73eca8a5
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 182987
+  packageName: Channel Packer Pro
+  packageVersion: 1.5.3
+  assetPath: Assets/DarkMoorGames/ChannelPackerPro/Editor/PackOptions/PackOptionToAlpha.cs
+  uploadId: 480178

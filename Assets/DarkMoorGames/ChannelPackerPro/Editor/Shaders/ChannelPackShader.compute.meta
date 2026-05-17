@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 98d99a99e722ea34d996dc043d89d5aa
+ComputeShaderImporter:
+  externalObjects: {}
+  currentAPIMask: 4
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 182987
+  packageName: Channel Packer Pro
+  packageVersion: 1.5.3
+  assetPath: Assets/DarkMoorGames/ChannelPackerPro/Editor/Shaders/ChannelPackShader.compute
+  uploadId: 480178

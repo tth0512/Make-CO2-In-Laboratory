@@ -1,0 +1,19 @@
+﻿#pragma kernel ColorReplace
+
+uint ImageWidth;
+uint ImageHeight;
+Texture2D<float4> Original;
+RWTexture2D<float4> Output;
+
+float Min;
+float Max;
+float4 Color1;
+float4 Color2;
+
+[numthreads(8,8,1)]
+void ColorReplace(uint3 id : SV_DispatchThreadID)
+{
+	float4 output = Original[id.xy];
+	float3 c = lerp(Color2.rgb, output.rgb, smoothstep(Min, Max, distance(output.rgb, Color1.rgb)));
+	Output[id.xy] = float4(c.rgb, output.a);
+}

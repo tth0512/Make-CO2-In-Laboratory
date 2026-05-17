@@ -1,0 +1,24 @@
+﻿#pragma kernel Circle
+
+uint ImageWidth;
+uint ImageHeight;
+RWTexture2D<float4> Output;
+
+int IntValue;
+float4 Color;
+float Scale;
+float Hardness;
+float OffsetX;
+float OffsetY;
+
+[numthreads(8, 8, 1)]
+void Circle(uint3 id : SV_DispatchThreadID)
+{
+	float2 uv = float2((id.x + 0.5) / ImageWidth, (id.y + 0.5) / ImageHeight) - float2(OffsetX, OffsetY);
+
+	float2 grid = frac(uv * IntValue);
+	float dist = distance(float2(0.5, 0.5), grid.xy);
+
+	float a = smoothstep(0.5, 0.4999999 * Hardness, dist / Scale);
+	Output[id.xy] = float4(Color.rgb, a);
+}

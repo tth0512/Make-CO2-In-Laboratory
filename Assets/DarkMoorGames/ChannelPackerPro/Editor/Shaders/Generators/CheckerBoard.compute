@@ -1,0 +1,28 @@
+﻿#pragma kernel CheckerBoard
+
+uint ImageWidth;
+uint ImageHeight;
+RWTexture2D<float4> Output;
+
+int IntValue;
+float4 Color1;
+float4 Color2;
+
+[numthreads(8,8,1)]
+void CheckerBoard(uint3 id : SV_DispatchThreadID)
+{
+	float4 output = float4(0.0, 0.0, 0.0, 0.0);
+	float2 uv = float2((id.x + 0.5) / ImageWidth, (id.y + 0.5) / ImageHeight);
+
+	float f = floor(uv.x * IntValue) + floor(uv.y * IntValue);
+	int n = fmod(f, 2.0);
+	if (n == 1)
+	{
+		output = Color1;
+	}
+	else
+	{
+		output = Color2;
+	}
+	Output[id.xy] = output;
+}

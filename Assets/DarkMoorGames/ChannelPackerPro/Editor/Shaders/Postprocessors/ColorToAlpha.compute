@@ -1,0 +1,20 @@
+﻿#pragma kernel ColorToAlpha
+
+uint ImageWidth;
+uint ImageHeight;
+Texture2D<float4> Original;
+RWTexture2D<float4> Output;
+
+float Min;
+float Max;
+float4 Color;
+
+[numthreads(8,8,1)]
+void ColorToAlpha(uint3 id : SV_DispatchThreadID)
+{
+	float4 output = Original[id.xy];
+	float d = distance(output.rgb, Color.rgb);
+
+	output.a = lerp(0.0, 1.0, smoothstep(Min, Max, d));
+	Output[id.xy] = output;
+}

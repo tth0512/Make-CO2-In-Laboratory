@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 8b87c7f04b7ac0c44a50bc0732fa250a
+ComputeShaderImporter:
+  externalObjects: {}
+  currentAPIMask: 2052
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 182987
+  packageName: Channel Packer Pro
+  packageVersion: 1.5.3
+  assetPath: Assets/DarkMoorGames/ChannelPackerPro/Editor/Shaders/Postprocessors/Blur.compute
+  uploadId: 480178

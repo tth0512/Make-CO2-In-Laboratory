@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f3227509a8a8e3e4f8cfc209bb089768
+ComputeShaderImporter:
+  externalObjects: {}
+  currentAPIMask: 2052
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 182987
+  packageName: Channel Packer Pro
+  packageVersion: 1.5.3
+  assetPath: Assets/DarkMoorGames/ChannelPackerPro/Editor/Shaders/Generators/CheckerBoard.compute
+  uploadId: 480178

@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 1f97fa8cc6c80c341ac604f8d84bfb2e
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 182987
+  packageName: Channel Packer Pro
+  packageVersion: 1.5.3
+  assetPath: Assets/DarkMoorGames/ChannelPackerPro/Editor/Shaders/UnlitVertexColor.shader
+  uploadId: 480178

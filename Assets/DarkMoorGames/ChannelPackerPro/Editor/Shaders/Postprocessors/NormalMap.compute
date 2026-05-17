@@ -1,0 +1,88 @@
+﻿#pragma kernel NormalMap
+#pragma kernel NormalMapClamp
+
+uint ImageWidth;
+uint ImageHeight;
+Texture2D<float4> Original;
+RWTexture2D<float4> Output;
+
+float Strength;
+
+[numthreads(8,8,1)]
+void NormalMap(uint3 id : SV_DispatchThreadID)
+{
+	float4 original = Original[id.xy];
+
+	float3 current = Original[id.xy].rgb;
+	float3 left = Original[id.xy + uint2(-1, 0)].rgb;
+	float3 right = Original[id.xy + uint2(1, 0)].rgb;
+	float3 up = Original[id.xy + uint2(0, 1)].rgb;
+	float3 down = Original[id.xy + uint2(0, -1)].rgb;
+
+	if (id.x == 0)
+	{
+		left = Original[uint2(ImageWidth -1, id.y)].rgb;
+	}
+	if (id.x == ImageWidth - 1)
+	{
+		right = Original[uint2(0, id.y)].rgb;
+	}
+	if (id.y == 0)
+	{
+		down = Original[uint2(id.x, ImageHeight -1)].rgb;
+	}
+	if (id.y == ImageHeight - 1)
+	{
+		up = Original[uint2(id.x, 0)].rgb;
+	}
+
+	float x = ((left.r - current.r) + (current.r - right.r)) * 0.5;
+	float y = ((down.g - current.g) + (current.g - up.g)) * 0.5;
+
+	float dir = sign(Strength);
+	float height = 1.0 / Strength;
+
+	float3 normal = float3(x * dir, y * dir, height);
+	normal = normalize(normal);
+	normal = float3(normal.rg * 0.5 + 0.5, 1.0);
+	Output[id.xy] = float4(normal.rg, 1.0, original.a);
+}
+[numthreads(8, 8, 1)]
+void NormalMapClamp(uint3 id : SV_DispatchThreadID)
+{
+	float4 original = Original[id.xy];
+
+	float3 current = Original[id.xy].rgb;
+	float3 left = Original[id.xy + uint2(-1, 0)].rgb;
+	float3 right = Original[id.xy + uint2(1, 0)].rgb;
+	float3 up = Original[id.xy + uint2(0, 1)].rgb;
+	float3 down = Original[id.xy + uint2(0, -1)].rgb;
+
+	if (id.x == 0)
+	{
+		left = Original[uint2(0, id.y)].rgb;
+	}
+	if (id.x == ImageWidth - 1)
+	{
+		right = Original[uint2(ImageWidth -1, id.y)].rgb;
+	}
+	if (id.y == 0)
+	{
+		down = Original[uint2(id.x, 0)].rgb;
+	}
+	if (id.y == ImageHeight - 1)
+	{
+		up = Original[uint2(id.x, ImageHeight -1)].rgb;
+	}
+
+	float x = ((left.r - current.r) + (current.r - right.r)) * 0.5;
+	float y = ((down.g - current.g) + (current.g - up.g)) * 0.5;
+
+	float dir = sign(Strength);
+	float height = 1.0 / Strength;
+
+	float3 normal = float3(x * dir, y * dir, height);
+	normal = normalize(normal);
+	normal = float3(normal.rg * 0.5 + 0.5, 1.0);
+	Output[id.xy] = float4(normal.rg, 1.0, original.a);
+}

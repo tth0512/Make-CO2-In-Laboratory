@@ -8,6 +8,9 @@ TagManager:
   - Glass
   - Cabinet
   - showcase
+  - Experiment
+  - ExperimentStuff
+  - Outline
   layers:
   - Default
   - TransparentFX
@@ -18,7 +21,7 @@ TagManager:
   - Ground
   - Interactable
   - Hover
-  - 
+  - Outline
   - 
   - 
   - 
